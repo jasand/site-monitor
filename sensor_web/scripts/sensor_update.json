@@ -1,0 +1,21 @@
+{
+    "id": 102,
+    "conversionFunction": "((X * 4.8828) - 500) / 10",
+    "deleted": false,
+    "description": "TMP36 temperature sensor",
+    "firstConnect": null,
+    "mute": false,
+    "sensorIdent": "sensor-jan-temp-inne",
+    "sensorType": "Temperature",
+    "statusErrHigh": 0,
+    "statusErrLow": 0,
+    "statusOkHigh": 0,
+    "statusOkLow": 0,
+    "statusWarnHigh": 0,
+    "statusWarnLow": 0,
+    "unitOfMeasure": {
+        "id": 2,
+        "unitName": "Celsius",
+        "unitSymbol": "\u00b0C"
+    }
+}

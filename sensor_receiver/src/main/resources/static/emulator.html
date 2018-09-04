@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sensor Emulator</title>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/handlebars-v3.0.3.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/emulator.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="css/styles.css" type="text/css"/>
+</head>
+<body>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Sensor Data Emulator</h1>
+        <p>Emulerer sensorer og sender sensordata til mottak. Data genereres hvert 5. sekund.</p>
+    </div>
+    <div class="row">
+
+        <div id="content"  role="main">
+        </div>
+
+    </div>
+    <hr>
+    <button id="add-emulator" type="button" class="btn btn-primary">Add emulator</button>
+</div>
+
+
+<script id="emulator-template" type="text/x-handlebars-template">
+    {{#each sensors}}
+    <div class="col-sm-4 col-md-3">
+        <div id="sensor-{{@index}}" class="sensordiv">
+            <p><b>Sensor ident:</b> <span id="sensor-ident-{{@index}}">{{sensorIdent}}</span></p>
+            <p><b>Site ident:</b> <span id="site-ident-{{@index}}">{{siteIdent}}</span></p>
+            Emulator type:
+            <select id="select-emulator-type-{{@index}}" class="emulator-type-config">
+                <option value="sinusoidal">Sinus</option>
+                <option value="triangle">Trekant</option>
+                <option value="random">Random</option>
+            </select>
+            <br>
+            Signal periode:
+            <select id="select-emulator-period-{{@index}}" class="emulator-period-config">
+                <option value="30000">30 sek</option>
+                <option value="60000">1 min</option>
+                <option value="120000">2 min</option>
+                <option value="300000">5 min</option>
+                <option value="600000">10 min</option>
+                <option value="1200000">20 min</option>
+                <option value="1800000">30 min</option>
+            </select>
+            <br>
+            Øvre grense:
+            <select id="select-emulator-peak-{{@index}}" class="sensor-peak-config">
+                <option value="1023">1023</option>
+                <option value="1000">1000</option>
+                <option value="950">950</option>
+                <option value="900">900</option>
+                <option value="850">850</option>
+                <option value="800">800</option>
+                <option value="750">750</option>
+                <option value="700">700</option>
+                <option value="650">650</option>
+                <option value="600">600</option>
+                <option value="550">550</option>
+                <option value="500">500</option>
+            </select>
+            <br>
+            Nedre grense:
+            <select id="select-emulator-min-{{@index}}" class="sensor-min-config">
+                <option value="450">450</option>
+                <option value="400">400</option>
+                <option value="350">350</option>
+                <option value="300">300</option>
+                <option value="250">250</option>
+                <option value="200">200</option>
+                <option value="150">150</option>
+                <option value="100">100</option>
+                <option value="50">50</option>
+                <option value="0">0</option>
+            </select>
+            <br>
+            Av/på: <a id="onOffToggler-{{@index}}" href="#" class="toggler" data-id="{{@index}}">&nbsp;</a>
+        </div>
+    </div>
+    {{/each}}
+</script>
+
+<script id="new-emulator-template" type="text/x-handlebars-template">
+    <div id="emulatorModal" class="modal fade" role="dialog">
+        <div class="modal-dialog"  style="width:800">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Add emulator</h3>
+                </div>
+
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label for="inputSiteIdent" class="col-sm-3 control-label">Site Ident</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputSiteIdent" placeholder="Site Ident">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputSensorIdent" class="col-sm-3 control-label">Sensor Ident</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" id="inputSensorIdent" placeholder="Sensor Ident">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmulatorType" class="col-sm-3 control-label">Emulator type</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="inputEmulatorType">
+                                    <option value="sinusoidal">Sinus</option>
+                                    <option value="triangle">Trekant</option>
+                                    <option value="random">Random</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputEmulatorPeriod" class="col-sm-3 control-label">Signal period</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="inputEmulatorPeriod">
+                                    <option value="30000">30 sek</option>
+                                    <option value="60000">1 min</option>
+                                    <option value="120000">2 min</option>
+                                    <option value="300000">5 min</option>
+                                    <option value="600000">10 min</option>
+                                    <option value="1200000">20 min</option>
+                                    <option value="1800000">30 min</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputPeakValue" class="col-sm-3 control-label">Peak value</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="inputPeakValue">
+                                    <option value="1023">1023</option>
+                                    <option value="1000">1000</option>
+                                    <option value="950">950</option>
+                                    <option value="900">900</option>
+                                    <option value="850">850</option>
+                                    <option value="800">800</option>
+                                    <option value="750">750</option>
+                                    <option value="700">700</option>
+                                    <option value="650">650</option>
+                                    <option value="600">600</option>
+                                    <option value="550">550</option>
+                                    <option value="500">500</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="inputMinValue" class="col-sm-3 control-label">Min value</label>
+                            <div class="col-sm-9">
+                                <select class="form-control" id="inputMinValue">
+                                    <option value="450">450</option>
+                                    <option value="400">400</option>
+                                    <option value="350">350</option>
+                                    <option value="300">300</option>
+                                    <option value="250">250</option>
+                                    <option value="200">200</option>
+                                    <option value="150">150</option>
+                                    <option value="100">100</option>
+                                    <option value="50">50</option>
+                                    <option value="0">0</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-3 col-sm-9">
+                                <div class="checkbox">
+                                    <label>
+                                        <input id="inputActiveCheckbox" type="checkbox">Start activated
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-8 col-sm-4">
+                                <button id="inputCancelBtn" type="button" class="btn btn-default">Cancel</button>
+                                <button id="inputCreateBtn" type="button" class="btn btn-primary">Create</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</script>
+
+</body>
+</html>

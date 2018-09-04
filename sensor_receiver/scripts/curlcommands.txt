@@ -1,0 +1,4 @@
+
+curl -X POST -d @sensorReading.json http://localhost:8081/basic --header "Content-Type:application/json;"
+
+

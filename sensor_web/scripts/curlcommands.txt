@@ -1,0 +1,58 @@
+************************************************************************************
+* /sites
+************************************************************************************
+==> Liste alle sites (uten sensorer og maskiner):
+http://localhost:8080/sensorweb/api/sites
+
+==> Hente en site (laster også sensorer og maskiner):
+http://localhost:8080/sensorweb/api/sites/100
+
+==> Oppdatere site:
+curl -X PUT -d @site_update.json http://localhost:8080/sensorweb/api/sites/100 --header "Content-Type:application/json; charset=utf-8;"
+
+
+************************************************************************************
+* /sites/{siteId}/machines
+************************************************************************************
+==> Opprette en maskin:
+curl -X POST -d @machine_create.json http://localhost:8080/sensorweb/api/sites/100/machines --header "Content-Type:application/json; charset=utf-8;"
+
+==> Oppdatere en maskin:
+curl -X PUT -d @machine_update.json http://localhost:8080/sensorweb/api/sites/100/machines/200 --header "Content-Type:application/json; charset=utf-8;"
+
+==> Liste maskiner for site:
+curl http://localhost:8080/sensorweb/api/sites/100/machines
+
+==> Hente en maskin:
+curl http://localhost:8080/sensorweb/api/sites/100/machines/200
+
+==> Slette en maskin (sletter ikke sensorer under):
+curl -X DELETE http://localhost:8080/sensorweb/api/sites/100/machines/200
+
+==> Lister sensorer under maskin:
+curl http://localhost:8080/sensorweb/api/sites/100/machines/2/sensorGroups
+
+==> Legger en sensor til en maskin:
+curl -X PUT http://localhost:8080/sensorweb/api/sites/100/machines/2/sensorGroups/102
+
+==> Fjerner en sensor fra en maskin:
+curl -X DELETE http://localhost:8080/sensorweb/api/sites/100/machines/2/sensorGroups/102
+
+************************************************************************************
+* /sensorGroups
+************************************************************************************
+==> Hente data for en sensor:
+curl http://localhost:8080/sensorweb/api/sensorGroups/100
+
+==> Oppdatere en sensor:
+curl -X PUT -d @sensor_update.json http://localhost:8080/sensorweb/api/sensorGroups/102 --header "Content-Type:application/json; charset=utf-8;"
+
+==> Hente sensordata etter gitt dato:
+http://localhost:8080/sensorweb/api/sensorGroups/101/readings/after?after=Fri,%2009%20Jan%202015%2014:30:00%20GMT
+
+==> Hente sensordata mellom to datoer:
+http://localhost:8080/sensorweb/api/sensorGroups/101/readings/between?from=Fri,%2009%20Jan%202015%2008:30:30%20GMT&to=Fri,%2009%20Jan%202015%2009:30:30%20GMT
+
+
+
+curl -X POST -d @sensor.json http://localhost:8080/sensor/receiver/basic --header "Content-Type:application/json; charset=utf-8;"

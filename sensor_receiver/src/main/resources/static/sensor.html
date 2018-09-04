@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="libs/react.js"></script>
+    <script src="libs/react-dom.js"></script>
+    <script type="text/javascript" src="js/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css" type="text/css"/>
+    <link rel="stylesheet" href="css/styles.css" type="text/css"/>
+</head>
+<body>
+<div class="container">
+    <div id="my-app"></div>
+</div>
+
+<script type="text/javascript">
+
+
+    var sensorHolder = {
+        sensors : [
+            {
+                sensorGroupId : "sensor-group-1",
+                sensorIdent : "emulator-sensor-1",
+                emulatorType : "sinusoidal",
+                signalPeak : 750,
+                signalMin : 250,
+                signalPeriod : 60000,
+                sampleArray : [],
+                sampleIndex : 0,
+                isActive : true
+            }, {
+                sensorGroupId : "sensor-group-1",
+                sensorIdent : "emulator-sensor-2",
+                emulatorType : "sinusoidal",
+                signalPeak : 750,
+                signalMin : 250,
+                signalPeriod : 60000,
+                sampleArray : [],
+                sampleIndex : 0,
+                isActive : true
+            }, {
+                sensorGroupId : "sensor-group-2",
+                sensorIdent : "emulator-sensor-3",
+                emulatorType : "triangle",
+                signalPeak : 750,
+                signalMin : 250,
+                signalPeriod : 60000,
+                sampleArray : [],
+                sampleIndex : 0,
+                isActive : true
+            }, {
+                sensorGroupId : "sensor-group-2",
+                sensorIdent : "emulator-sensor-4",
+                emulatorType : "random",
+                signalPeak : 750,
+                signalMin : 250,
+                signalPeriod : 60000,
+                sampleArray : [],
+                sampleIndex : 0,
+                isActive : true
+            }
+        ]
+    };
+
+    var Header = React.createClass({
+        render: function () {
+            const message = 'Hei på deg ' + this.props.yourName;
+            return React.createElement('h1', null, message);
+        }
+    });
+
+    var JumbotronClass = React.createClass({
+        render: function() {
+            return React.createElement('div', {className: 'jumbotron'},
+                    React.createElement('h1', null, 'Sensor Data Emulator'),
+                    React.createElement('p', null, 'Emulerer sensorer og sender sensordata til mottak. Data genereres hvert 5. sekund.')
+            );
+        }
+    });
+
+    var AddSensorModal = React.createClass({
+
+        getInitialState() {
+            return { showModal: false };
+        },
+
+        close() {
+            this.setState({ showModal: false });
+        },
+
+        open() {
+            this.setState({ showModal: true });
+            console.log("OPEN...");
+        },
+        render: function() {
+            console.log("RENDER...");
+            var properties = {};
+            if (this.state.showModal == false) {
+                properties.className= 'modal fade';
+                properties.role = 'dialog';
+            } else {
+                properties.className= 'modal-show';
+                properties.role = 'dialog';
+            }
+            console.log(properties);
+            return (
+                React.createElement('div', null,
+                        React.createElement('button', { className: 'btn btn-primary', onClick: this.open }, 'Add emulator'),
+                        React.createElement('div', properties,
+                            React.createElement('div', {className: 'modal-dialog',  style: {width:800}},
+                                    React.createElement('div', {className: 'modal-content'},
+                                            React.createElement('div', {className: 'modal-header'},
+                                                    React.createElement('h3', null, 'Add emulator')
+                                            ),
+                                            React.createElement('div', {className: 'modal-body'},
+                                                    React.createElement('p', null, 'Test modal...'),
+                                                    React.createElement('button', { className: 'btn btn-primary', onClick: this.close }, 'Close')
+                                            )
+                                    )
+                            )
+                        )
+                ))
+        }
+
+    });
+
+//    bsStyle="primary"
+//    bsSize="large"
+//    onClick={this.open}
+
+    var SensorClass = React.createClass({
+        getInitialState () {
+            return {
+                sensor: this.props.sensor
+            };
+        },
+        handleEmulatorTypeChange(e) {
+            console.log(e.target.value);
+            console.log(this.state);
+            var newSensor = this.state.sensor;
+            newSensor.emulatorType = e.target.value;
+            this.setState({sensor: newSensor});
+            setNewSensorValues(newSensor);
+        },
+        handleEmulatorPeriodChange(e) {
+            var newSensor = this.state.sensor;
+            newSensor.signalPeriod = e.target.value;
+            this.setState({sensor: newSensor});
+            setNewSensorValues(newSensor);
+        },
+        handleEmulatorNewPeakChange(e) {
+            var newSensor = this.state.sensor;
+            newSensor.signalPeak = e.target.value;
+            this.setState({sensor: newSensor});
+            setNewSensorValues(newSensor);
+        },
+        handleEmulatorNewMinChange(e) {
+            var newSensor = this.state.sensor;
+            newSensor.signalMin = e.target.value;
+            this.setState({sensor: newSensor});
+            setNewSensorValues(newSensor);
+        },
+        handleEmulatorIsActiveChange(e) {
+            var newSensor = this.state.sensor;
+            newSensor.isActive = e.target.value;
+            this.setState({sensor: newSensor});
+            setNewSensorValues(newSensor);
+        },
+        render: function () {
+            return React.createElement('div', {className: 'sensordiv'},
+                    React.createElement('p', null,
+                            React.createElement('b', null, 'sensorgroup ID: '),
+                            React.createElement('span', null, this.state.sensor.sensorGroupId)),
+                    React.createElement('p', null,
+                            React.createElement('b', null, 'sensor ID: '),
+                            React.createElement('span', null, this.state.sensor.sensorIdent)),
+                    'Emulator type: ',
+                    React.createElement('select', {defaultValue: this.state.sensor.emulatorType, onChange: this.handleEmulatorTypeChange},
+                            React.createElement('option', {value: 'sinusoidal'}, 'Sinus'),
+                            React.createElement('option', {value: 'triangle'}, 'Trekant'),
+                            React.createElement('option', {value: 'random'}, 'Random')),
+                    React.createElement('br', null, null),
+                    'Signal periode: ',
+                    React.createElement('select', {defaultValue: this.state.sensor.signalPeriod, onChange: this.handleEmulatorPeriodChange},
+                            React.createElement('option', {value: 30000}, '30 sek'),
+                            React.createElement('option', {value: 60000}, '1 min'),
+                            React.createElement('option', {value: 120000}, '2 min'),
+                            React.createElement('option', {value: 300000}, '5 min'),
+                            React.createElement('option', {value: 600000}, '10 min'),
+                            React.createElement('option', {value: 1200000}, '20 min'),
+                            React.createElement('option', {value: 1800000}, '30 min')),
+                    React.createElement('br', null, null),
+                    'Øvre grense: ',
+                    React.createElement('select', {defaultValue: this.state.sensor.signalPeak, onChange: this.handleEmulatorNewPeakChange},
+                            React.createElement('option', {value: 1023}, '1023'),
+                            React.createElement('option', {value: 1000}, '1000'),
+                            React.createElement('option', {value: 950}, '950'),
+                            React.createElement('option', {value: 900}, '900'),
+                            React.createElement('option', {value: 850}, '850'),
+                            React.createElement('option', {value: 800}, '800'),
+                            React.createElement('option', {value: 750}, '750'),
+                            React.createElement('option', {value: 700}, '700'),
+                            React.createElement('option', {value: 650}, '650'),
+                            React.createElement('option', {value: 600}, '600'),
+                            React.createElement('option', {value: 550}, '550'),
+                            React.createElement('option', {value: 500}, '500')),
+                    React.createElement('br', null, null),
+                    'Nedre grense: ',
+                    React.createElement('select', {defaultValue: this.state.sensor.signalMin, onChange: this.handleEmulatorNewMinChange},
+                            React.createElement('option', {value: 450}, '450'),
+                            React.createElement('option', {value: 400}, '400'),
+                            React.createElement('option', {value: 350}, '350'),
+                            React.createElement('option', {value: 300}, '300'),
+                            React.createElement('option', {value: 250}, '250'),
+                            React.createElement('option', {value: 200}, '200'),
+                            React.createElement('option', {value: 150}, '150'),
+                            React.createElement('option', {value: 100}, '100'),
+                            React.createElement('option', {value: 50}, '50'),
+                            React.createElement('option', {value: 0}, '0'))
+            );
+        }
+    });
+
+    var sampleFrequency = 5000;
+
+
+    var ColumnWrapper = React.createClass({
+        render: function () {
+            return React.createElement('div', {className: 'col-sm-4 col-md-3'},
+                    React.createElement(SensorClass, this.props)
+            );
+        }
+    });
+
+    var RowWrapper = React.createClass({
+        render: function() {
+            return React.createElement('div', {className: 'row'},
+                    React.createElement('div', {id: 'content', role: 'main'}, sensorHolder.sensors.map(function (sensor) {
+                        return React.createElement(ColumnWrapper, { key: sensor.sensorIdent, sensor: sensor});
+                    })));
+        }
+    });
+
+
+    var myJumbotron = React.createElement(JumbotronClass);
+    var myRowWrapper = React.createElement(RowWrapper, sensorHolder);
+    var hr = React.createElement('hr', null, null);
+    var myButton = React.createElement('button', { className: 'btn btn-primary' }, 'Add emulator');
+    var myModal = React.createElement(AddSensorModal);
+
+    var topDiv = React.createElement('div', {id: 'minid', className: 'minklasse'}, myJumbotron, myModal, hr, myRowWrapper);
+
+    // Render til DOM:
+    ReactDOM.render(topDiv, document.getElementById('my-app'));
+
+
+    //
+    // Sensor calculation stuff...
+    //
+    for (var i=0; i<sensorHolder.sensors.length; i++) {
+        calculateSignal(i);
+    }
+    // Send readings every sampleFrequency milliseconds
+    setInterval(function (){
+        processEmulatorsAndPostEmulatedReadings();
+    }, sampleFrequency);
+
+
+    //
+    // functions
+    //
+
+    function setNewSensorValues(sensor) {
+        for (var i=0; i<sensorHolder.sensors.length; i++) {
+            if (sensorHolder.sensors[i].sensorIdent == sensor.sensorIdent) {
+                sensorHolder.sensors[i].emulatorType = sensor.emulatorType;
+                sensorHolder.sensors[i].signalPeak = sensor.signalPeak;
+                sensorHolder.sensors[i].signalMin = sensor.signalMin;
+                sensorHolder.sensors[i].signalPeriod = sensor.signalPeriod;
+                sensorHolder.sensors[i].isActive = sensor.isActive;
+                calculateSignal(i);
+                return;
+            }
+        }
+        console.log("Could not update sensor: " + sensor.sensorIdent);
+    }
+
+    function processEmulatorsAndPostEmulatedReadings() {
+        console.log("Processing emulators");
+        for (var i=0; i<sensorHolder.sensors.length; i++) {
+            //console.log("Processing sensor: " + sensors[i].id);
+            var sensorGroupId = sensorHolder.sensors[i].sensorGroupId;
+            var sensorIdent = sensorHolder.sensors[i].sensorIdent;
+            var rawValue = sensorHolder.sensors[i].sampleArray[sensorHolder.sensors[i].sampleIndex];
+            if (sensorHolder.sensors[i].isActive) {
+                postEmulatedValue(sensorGroupId, sensorIdent, rawValue);
+            }
+            sensorHolder.sensors[i].sampleIndex++;
+            if (sensorHolder.sensors[i].sampleIndex >= sensorHolder.sensors[i].sampleArray.length) {
+                sensorHolder.sensors[i].sampleIndex = 0;
+            }
+        }
+    }
+
+    function calculateSignal(index) {
+        if (sensorHolder.sensors[index].emulatorType == 'sinusoidal') {
+            calculateSinusWave(index);
+        } else if (sensorHolder.sensors[index].emulatorType == 'random') {
+            calculateRandomSignal(index);
+        } else {
+            calculateTriangleWave(index);
+        }
+    }
+
+    function calculateSinusWave(index) {
+        // Kalkuler skala (over-nedre)/2
+        var scale = Number((sensorHolder.sensors[index].signalPeak - sensorHolder.sensors[index].signalMin) / 2);
+        // Regn ut hvor mange punkter i array
+        var samplesLen = Math.floor(Number(sensorHolder.sensors[index].signalPeriod) / sampleFrequency);
+        // Regn sinus og gange med skala
+        sensorHolder.sensors[index].sampleArray = [];
+        sensorHolder.sensors[index].sampleIndex = 0;
+        for (var i=0; i<samplesLen; i++) {
+            var sample = Math.floor(Math.sin((i/samplesLen) * 6.28) * scale + scale + Number(sensorHolder.sensors[index].signalMin));
+            sensorHolder.sensors[index].sampleArray.push(sample);
+        }
+        console.log("Sinus: " + sensorHolder.sensors[index].sampleArray);
+    }
+
+    function calculateTriangleWave(index) {
+        // Kalkuler range (over-nedre)
+        var range = Number(sensorHolder.sensors[index].signalPeak - sensorHolder.sensors[index].signalMin);
+        // Regn ut hvor mange punkter i array
+        var samplesLen = Math.floor(Number(sensorHolder.sensors[index].signalPeriod) / sampleFrequency);
+        var steps = (samplesLen / 2) +1;
+        var step = range / steps;
+        console.log("range=" + range + ", samplesLen=" + samplesLen + ", steps=" + steps + ", step=" + step);
+        // Regn sinus og gange med skala
+        sensorHolder.sensors[index].sampleArray = [];
+        sensorHolder.sensors[index].sampleIndex = 0;
+        for (var i=0; i<samplesLen; i++) {
+            if (i < steps) {
+                var sample = Math.floor((step * i) + Number(sensorHolder.sensors[index].signalMin));
+                sensorHolder.sensors[index].sampleArray.push(sample);
+            } else {
+                var sample = Math.floor(range - (step * (i - steps + 2)) + Number(sensorHolder.sensors[index].signalMin));
+                sensorHolder.sensors[index].sampleArray.push(sample);
+            }
+        }
+        console.log("Triangle: " + sensorHolder.sensors[index].sampleArray);
+    }
+
+    function calculateRandomSignal(index) {
+        var scale = Number(sensorHolder.sensors[index].signalPeak - sensorHolder.sensors[index].signalMin);
+        var samplesLen = Math.floor(Number(sensorHolder.sensors[index].signalPeriod) / sampleFrequency);
+        sensorHolder.sensors[index].sampleArray = [];
+        sensorHolder.sensors[index].sampleIndex = 0;
+        for (var i=0; i<samplesLen; i++) {
+            var sample = Math.floor((Math.random()*scale) + Number(sensorHolder.sensors[index].signalMin));
+            sensorHolder.sensors[index].sampleArray.push(sample);
+        }
+        console.log("Random: " + sensorHolder.sensors[index].sampleArray);
+    }
+
+    function postEmulatedValue(sensorGroup, sensorIdent, value) {
+        var postObj = {};
+        postObj.sensorGroupId = sensorGroup;
+        postObj.sensorId = sensorIdent;
+        postObj.sensorValue = value;
+        var jsonString = JSON.stringify(postObj);
+        console.log("JSON string: " + jsonString);
+//    $.ajax({
+//        type: "POST",
+//        url: "./basic",
+//        data: jsonString,
+//        contentType: "application/json; charset=utf-8",
+//        dataType: "json",
+//        success: function(data){console.log("Data OK: " + data);},
+//        failure: function(errMsg) {
+//            console.log("Error posting: " + errMsg);
+//        }
+//    });
+    }
+
+</script>
+
+</body>
+</html>
