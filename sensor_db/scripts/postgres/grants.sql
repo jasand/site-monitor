@@ -1,7 +1,5 @@
 GRANT ALL PRIVILEGES ON authorities TO sensoruser;
 
-GRANT ALL PRIVILEGES ON machines TO sensoruser;
-
 GRANT ALL PRIVILEGES ON sensor_reading_queue TO sensoruser;
 
 GRANT ALL PRIVILEGES ON sensor_readings TO sensoruser;

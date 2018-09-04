@@ -32,8 +32,6 @@ public class DatabaseTest {
     @Autowired
     SiteRepo siteRepo;
     @Autowired
-    MachineRepo machineRepo;
-    @Autowired
     SensorRepo sensorRepo;
     @Autowired
     UnitOfMeasureRepo unitOfMeasureRepo;

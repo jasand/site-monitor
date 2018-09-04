@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 public class SensorGroup {
     private Long id;
     private Long siteId;
-    private Long machineId;
     private String sensorGroupId;
     private String description;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
@@ -27,9 +26,6 @@ public class SensorGroup {
         this.id = e.getId();
         if (e.getSite() != null) {
             this.siteId = e.getSite().getId();
-        }
-        if (e.getMachine() != null) {
-            this.siteId = e.getMachine().getId();
         }
         this.sensorGroupId = e.getSensorGroupId();
         this.description = e.getDescription();
@@ -53,14 +49,6 @@ public class SensorGroup {
 
     public void setSiteId(Long siteId) {
         this.siteId = siteId;
-    }
-
-    public Long getMachineId() {
-        return machineId;
-    }
-
-    public void setMachineId(Long machineId) {
-        this.machineId = machineId;
     }
 
     public String getSensorGroupId() {

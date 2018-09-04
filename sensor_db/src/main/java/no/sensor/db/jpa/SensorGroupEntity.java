@@ -23,10 +23,6 @@ public class SensorGroupEntity {
     @JoinColumn(name="site_id")
     private SiteEntity site;
 
-    @ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name="machine_id")
-    private MachineEntity machine;
-
     @Column(name = "sensor_group_id")
     private String sensorGroupId;
 
@@ -62,14 +58,6 @@ public class SensorGroupEntity {
 
     public void setSite(SiteEntity site) {
         this.site = site;
-    }
-
-    public MachineEntity getMachine() {
-        return machine;
-    }
-
-    public void setMachine(MachineEntity machine) {
-        this.machine = machine;
     }
 
     public String getSensorGroupId() {

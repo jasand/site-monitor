@@ -1,5 +1,5 @@
 
--- Table for raw incoming readings, repace with JMS or Kafka later if necessary
+-- Table for raw incoming readings
 CREATE TABLE IF NOT EXISTS sensor_reading_queue (
   id              bigserial primary key not null,
   sensor_group_id text not null,
@@ -25,14 +25,6 @@ CREATE TABLE IF NOT EXISTS sites (
   deleted				    boolean
 );
 
-CREATE TABLE IF NOT EXISTS machines (
-  id 					      bigserial primary key not null,
-  site_id				    bigint REFERENCES sites (id),
-  machine_name      text,
-  description			  text,
-  deleted				    boolean
-);
-
 
 CREATE TABLE IF NOT EXISTS units_of_measure (
   id 				        bigserial primary key not null,
@@ -43,7 +35,6 @@ CREATE TABLE IF NOT EXISTS units_of_measure (
 CREATE TABLE IF NOT EXISTS sensor_groups (
   id 				          bigserial primary key not null,
   site_id				      bigint REFERENCES sites (id),
-  machine_id          bigint REFERENCES machines (id),
   sensor_group_id     text,
   description         text,
   first_connect       timestamp with time ZONE

@@ -17,7 +17,6 @@ public class Site {
     private String contactPhone;
     private String contactEmail;
     private List<SensorGroup> sensorGroups;
-    private List<Machine> machines;
     private SensorStatus accumulatedSensorStatus;
 
     public Site() {
@@ -35,12 +34,6 @@ public class Site {
             if (e.getSensorGroups() != null) {
                 sensorGroups = e.getSensorGroups().stream().map(sg -> new SensorGroup(sg)).collect(Collectors.toList());
             }
-            if (e.getMachines() != null) {
-                machines = e.getMachines().stream().map(m -> new Machine(m)).collect(Collectors.toList());
-            }
-
-            List<SensorGroup> inMachines = machines.stream().flatMap(x -> x.getSensorGroups().stream()).collect(Collectors.toList());
-            sensorGroups.removeAll(inMachines);
         }
     }
 
@@ -127,14 +120,6 @@ public class Site {
 
     public void setSensorGroups(List<SensorGroup> sensorGroups) {
         this.sensorGroups = sensorGroups;
-    }
-
-    public List<Machine> getMachines() {
-        return machines;
-    }
-
-    public void setMachines(List<Machine> machines) {
-        this.machines = machines;
     }
 
     public SensorStatus getAccumulatedSensorStatus() {

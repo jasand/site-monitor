@@ -18,13 +18,9 @@ INSERT INTO units_of_measure VALUES(DEFAULT, 'Omdreininger per minutt', 'o/min')
 INSERT INTO units_of_measure VALUES(DEFAULT, 'Omdreininger', 'Revs');
 
 INSERT INTO users VALUES ('jan', 'passwd', true);
-INSERT INTO users VALUES ('frank', 'passwd', true);
-INSERT INTO users VALUES ('paal', 'passwd', true);
 INSERT INTO users VALUES ('admin', 'passwd', true);
 
 INSERT INTO authorities VALUES ('jan', 'ROLE_USER');
-INSERT INTO authorities VALUES ('frank', 'ROLE_USER');
-INSERT INTO authorities VALUES ('paal', 'ROLE_USER');
 INSERT INTO authorities VALUES ('admin', 'ROLE_ADMIN');
 
 INSERT INTO sites VALUES(DEFAULT,'site-ident-1','JanBananSite',NULL,NULL,NULL,NULL,FALSE);

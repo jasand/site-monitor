@@ -1,17 +1,13 @@
 package no.sensor.service.impl;
 
-import no.sensor.db.jpa.MachineEntity;
-import no.sensor.db.jpa.SensorEntity;
 import no.sensor.db.jpa.SensorGroupEntity;
 import no.sensor.db.jpa.SiteEntity;
-import no.sensor.db.repo.MachineRepo;
 import no.sensor.db.repo.SensorGroupRepo;
 import no.sensor.db.repo.SiteRepo;
 import no.sensor.service.SiteService;
 import no.sensor.service.exception.ConflictException;
 import no.sensor.service.exception.NotFoundException;
 import no.sensor.service.model.SensorGroup;
-import no.sensor.service.model.SensorStatus;
 import no.sensor.service.model.Site;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,8 +31,6 @@ public class SiteServiceImpl implements SiteService {
     private SiteRepo siteRepo;
     @Autowired
     private SensorGroupRepo sensorGroupRepo;
-    @Autowired
-    private MachineRepo machineRepo;
 
     @Override
     public List<Site> getSites() {
@@ -110,12 +104,10 @@ public class SiteServiceImpl implements SiteService {
         // Disconnect sensorGroups from site (These are not deleted)
         List<SensorGroupEntity> sensorGroups = siteEntity.getSensorGroups();
         for (SensorGroupEntity sge : sensorGroups) {
-            sge.setMachine(null);
+
             sge.setSite(null);
         }
         sensorGroupRepo.save(sensorGroups);
-        // Delete machines for site
-        machineRepo.delete(siteEntity.getMachines());
         siteRepo.delete(siteEntity);
     }
 
@@ -152,7 +144,6 @@ public class SiteServiceImpl implements SiteService {
                     " belong to another site. Remove from other side first.");
         }
         sensorGroupEntity.setSite(siteEntity);
-        sensorGroupEntity.setMachine(null);
         sensorGroupEntity = sensorGroupRepo.save(sensorGroupEntity);
         return new SensorGroup(sensorGroupEntity);
     }
@@ -168,7 +159,6 @@ public class SiteServiceImpl implements SiteService {
                     " does not belong to site with ID " + siteId);
         }
         sensorGroupEntity.setSite(null);
-        sensorGroupEntity.setMachine(null);
         sensorGroupRepo.save(sensorGroupEntity);
     }
 

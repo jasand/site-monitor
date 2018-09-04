@@ -36,12 +36,7 @@ public class SiteEntity {
     @Fetch(FetchMode.SELECT)
     private List<SensorGroupEntity> sensorGroups;
 
-    @OneToMany(mappedBy="site", fetch = FetchType.EAGER)
-    @Fetch(FetchMode.SELECT)
-    private List<MachineEntity> machines;
-
     private Boolean deleted;
-
 
     public Long getId() {
         return id;
@@ -105,14 +100,6 @@ public class SiteEntity {
 
     public void setSensorGroups(List<SensorGroupEntity> sensorGroups) {
         this.sensorGroups = sensorGroups;
-    }
-
-    public List<MachineEntity> getMachines() {
-        return machines;
-    }
-
-    public void setMachines(List<MachineEntity> machines) {
-        this.machines = machines;
     }
 
     public Boolean isDeleted() {

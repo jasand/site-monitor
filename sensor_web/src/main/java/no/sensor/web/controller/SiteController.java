@@ -1,13 +1,10 @@
 package no.sensor.web.controller;
 
-import no.sensor.service.MachineService;
 import no.sensor.service.SensorService;
 import no.sensor.service.SiteService;
 import no.sensor.service.exception.ConflictException;
 import no.sensor.service.exception.InvalidInputException;
 import no.sensor.service.exception.NotFoundException;
-import no.sensor.service.model.Machine;
-import no.sensor.service.model.Sensor;
 import no.sensor.service.model.SensorGroup;
 import no.sensor.service.model.Site;
 import no.sensor.web.controller.error.ErrorResponse;
@@ -15,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -35,8 +31,6 @@ public class SiteController {
 
     @Autowired
     SiteService siteService;
-    @Autowired
-    MachineService machineService;
     @Autowired
     SensorService sensorService;
 
@@ -87,70 +81,6 @@ public class SiteController {
         siteService.deleteSite(siteId);
     }
 
-
-    //----------------------------------------------
-    // Machines
-    //----------------------------------------------
-
-    @ResponseBody
-    @RequestMapping(value = "/sites/{siteId}/machines", method = RequestMethod.POST)
-    public Machine createMachine(@PathVariable long siteId,
-                                 @RequestBody Machine machine) {
-        return machineService.createMachine(siteId, machine);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/sites/{siteId}/machines", method = RequestMethod.GET)
-    public List<Machine> getMachines(@PathVariable long siteId) {
-        return machineService.getMachines(siteId);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/sites/{siteId}/machines/{machineId}", method = RequestMethod.GET)
-    public Machine getMachine(@PathVariable long siteId,
-                              @PathVariable long machineId) {
-        return machineService.getMachine(machineId);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/sites/{siteId}/machines/{machineId}", method = RequestMethod.PUT)
-    public Machine updateMachine(@PathVariable long siteId,
-                                 @PathVariable long machineId,
-                                 @RequestBody Machine machine) {
-        return machineService.updateMachine(machineId, machine);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/sites/{siteId}/machines/{machineId}", method = RequestMethod.DELETE)
-    public void deleteMachine(@PathVariable long siteId,
-                              @PathVariable long machineId) {
-        machineService.deleteMachine(machineId);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/sites/{siteId}/machines/{machineId}/sensorgroups", method = RequestMethod.GET)
-    public List<SensorGroup> getMachineSensors(@PathVariable long siteId,
-                                               @PathVariable long machineId) {
-        return machineService.getMachineSensorGroups(machineId);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/sites/{siteId}/machines/{machineId}/sensorgroups/{sensorGroupId}", method = RequestMethod.PUT)
-    public SensorGroup addMachineSensor(@PathVariable long siteId,
-                                   @PathVariable long machineId,
-                                   @PathVariable long sensorGroupId) {
-        return machineService.addSensorGroup(machineId, sensorGroupId);
-    }
-
-    @ResponseBody
-    @RequestMapping(value = "/sites/{siteId}/machines/{machineId}/sensorgroups/{sensorGroupId}", method = RequestMethod.DELETE)
-    public void removeMachineSensor(@PathVariable long siteId,
-                                    @PathVariable long machineId,
-                                    @PathVariable long sensorGroupId) {
-        machineService.removeSensorGroup(machineId, sensorGroupId);
-    }
-
-    //
 
     @ResponseBody
     @RequestMapping(value = "/sites/{siteId}/sensorgroups", method = RequestMethod.GET)
