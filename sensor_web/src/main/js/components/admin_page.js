@@ -15,7 +15,7 @@ class AdminPage extends Component {
                             </div>
                             <div className="card-body">
                                 <Link to="/admin/sites">
-                                    <img src="/images/factory.png" className="img-fluid" width="100%" height="auto"/>
+                                    <img src="/images/iot-site-2.png" className="img-fluid" width="100%" height="auto"/>
                                 </Link>
                             </div>
                         </div>

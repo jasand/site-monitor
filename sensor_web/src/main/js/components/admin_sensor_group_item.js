@@ -35,8 +35,7 @@ class AdminSensorGroupItem extends Component {
                         <div className="col-md-3">
                             <div className="row">
                                 <div className="col-6">
-                                    <img src="/images/factory.png" width="40" height="40"/>
-                                    <img src="/images/machine-1.png" width="40" height="40"/>
+                                    <img src="/images/iot-site-2.png" width="40" height="40"/>
                                 </div>
                                 <div className="col-6">
                                     <Link to={linkUrl} className="btn btn-primary float-right" role="button">Edit</Link>

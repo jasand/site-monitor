@@ -11,17 +11,6 @@ class SiteDetails extends Component {
         this.props.fetchSite(siteId);
     }
 
-    renderMachine(machine) {
-        return (
-            <MachineDetails key={machine.id} machine={machine}/>
-        );
-    }
-
-    renderMachines() {
-        if (this.props.site.machines != null) {
-            return this.props.site.machines.map(this.renderMachine);
-        }
-    }
 
     renderSensorGroup(sensorGroup) {
         return (
@@ -57,16 +46,14 @@ class SiteDetails extends Component {
                             <b>Address: </b> {this.props.site.siteAddress}<br/>
                         </div>
                         <div className="col-md-3">
-                            <img src="/images/factory.png" width="150" height="150"/>
+                            <img src="/images/iot-site-2.png" width="150" height="150"/>
                         </div>
                         <div className="col-md-3">
                             <img src="/images/traffic-light-red.jpg" width="75" height="150"/>
                         </div>
                     </div>
                 </div>
-                <h2>Machines</h2>
-                {this.renderMachines()}
-                <h2>Standalone Sensor Groups</h2>
+                <h2>Sensor Groups</h2>
                 {this.renderSensorGroups()}
             </div>
         );

@@ -31,9 +31,6 @@ class AdminSensors extends Component {
                     </ol>
                 </nav>
                 <h1>Admin sensors</h1>
-                <p>
-                    Test: {siteName}
-                </p>
                 {this.renderSensorgroups()}
             </div>
         );

@@ -19,7 +19,7 @@ class AppNavBar extends Component {
                         <li className="nav-divider">&nbsp;&nbsp;</li>
                         <li className="nav-item active">
                             <Link className="navbar-link" to="/">
-                                MaintenanceWeb
+                                Site Monitor
                             </Link>
                         </li>
                         <li className="nav-divider">&nbsp;&nbsp;</li>

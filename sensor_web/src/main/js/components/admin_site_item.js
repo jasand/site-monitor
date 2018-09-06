@@ -10,7 +10,7 @@ class AdminSiteItem extends Component {
             <li className="list-group-item">
                 <div className="row">
                     <div className="col-md-2">
-                        <img src="/images/factory.png" width="50" height="50"/>
+                        <img src="/images/iot-site-2.png" width="50" height="50"/>
                     </div>
                     <div className="col-md-7">
                         SiteName: {this.props.site.siteName} <br/>

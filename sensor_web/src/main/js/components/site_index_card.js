@@ -13,7 +13,7 @@ class SiteIndexCard extends Component {
                     <div className="card-body">
                         <div className="row">
                             <div className="col-6">
-                                <Link to={linkUrl}><img src="/images/factory.png" width="100" height="100"/></Link>
+                                <Link to={linkUrl}><img src="/images/iot-site-2.png" width="100" height="100"/></Link>
                             </div>
                             <div className="col-6">
                                 <img src="images/traffic-light-red.jpg" width="50" height="100"/>
