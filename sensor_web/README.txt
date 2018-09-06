@@ -11,7 +11,3 @@ http://localhost:8080/sensorweb/api/sensorGroups/101/readings/between?from=Fri,%
 http://localhost:8080/sensorweb/api/sensorGroups/101/readings/after?after=Fri,%2009%20Jan%202015%2014:30:00%20GMT
 
 
-Query på siteIdent eksempel:
---------------------------------------------
-
-http://localhost:8080/sensorweb/api/sites/query/ident?siteIdent=JanBananSite

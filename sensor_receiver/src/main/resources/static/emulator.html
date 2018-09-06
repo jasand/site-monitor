@@ -33,7 +33,6 @@
     <div class="col-sm-4 col-md-3">
         <div id="sensor-{{@index}}" class="sensordiv">
             <p><b>Sensor ident:</b> <span id="sensor-ident-{{@index}}">{{sensorIdent}}</span></p>
-            <p><b>Site ident:</b> <span id="site-ident-{{@index}}">{{siteIdent}}</span></p>
             Emulator type:
             <select id="select-emulator-type-{{@index}}" class="emulator-type-config">
                 <option value="sinusoidal">Sinus</option>
@@ -98,12 +97,6 @@
 
                 <div class="modal-body">
                     <form class="form-horizontal">
-                        <div class="form-group">
-                            <label for="inputSiteIdent" class="col-sm-3 control-label">Site Ident</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control" id="inputSiteIdent" placeholder="Site Ident">
-                            </div>
-                        </div>
                         <div class="form-group">
                             <label for="inputSensorIdent" class="col-sm-3 control-label">Sensor Ident</label>
                             <div class="col-sm-9">

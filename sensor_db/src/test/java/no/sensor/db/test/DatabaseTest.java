@@ -14,6 +14,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -53,10 +54,10 @@ public class DatabaseTest {
         assertNotEquals(new Long(0), saved.getId());
         Long id = saved.getId();
 
-        SiteEntity fetched = siteRepo.findBySiteIdent(saved.getSiteIdent());
+        SiteEntity fetched = siteRepo.findOne(saved.getId());
         assertEquals(saved.getId(), fetched.getId());
         assertEquals("SiteName1", fetched.getSiteName());
-        assertEquals("ident1", fetched.getSiteIdent());
+        assertEquals("SiteName1", fetched.getSiteName());
     }
 
     @Test
@@ -90,7 +91,6 @@ public class DatabaseTest {
 
     private SiteEntity createDataSite1() {
         SiteEntity siteEntity = new SiteEntity();
-        siteEntity.setSiteIdent("ident1");
         siteEntity.setSiteName("SiteName1");
         siteEntity.setSiteAddress("Addr1");
         siteEntity.setContactPerson("cp1");

@@ -18,8 +18,6 @@ public class SiteEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sites_id_seq")
     @javax.persistence.SequenceGenerator(name="sites_id_seq", sequenceName = "sites_id_seq")
     private Long id;
-    @Column(name = "site_ident")
-    private String siteIdent;
     @Column(name = "site_name")
     private String siteName;
     @Column(name = "site_address")
@@ -44,14 +42,6 @@ public class SiteEntity {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getSiteIdent() {
-        return siteIdent;
-    }
-
-    public void setSiteIdent(String siteIdent) {
-        this.siteIdent = siteIdent;
     }
 
     public String getSiteName() {

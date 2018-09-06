@@ -19,7 +19,6 @@ class SiteIndexCard extends Component {
                                 <img src="images/traffic-light-red.jpg" width="50" height="100"/>
                             </div>
                         </div>
-                        <b>Site Ident:</b> {this.props.site.siteIdent}<br/>
                         <b>Status: </b> Normal
                     </div>
                 </div>

@@ -88,11 +88,6 @@ class EditSensorGroupPage extends Component {
                             </Field>
                         </div>
                         <Field
-                            label="MachineId"
-                            name="machineId"
-                            component={this.renderDisabledTextField}
-                        />
-                        <Field
                             label="SensorGroupId"
                             name="sensorGroupId"
                             component={this.renderDisabledTextField}

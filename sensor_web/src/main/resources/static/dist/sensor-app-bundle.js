@@ -41624,14 +41624,6 @@
 	                        _react2.default.createElement(
 	                            'b',
 	                            null,
-	                            'Site Ident:'
-	                        ),
-	                        ' ',
-	                        this.props.site.siteIdent,
-	                        _react2.default.createElement('br', null),
-	                        _react2.default.createElement(
-	                            'b',
-	                            null,
 	                            'Status: '
 	                        ),
 	                        ' Normal'
@@ -41718,7 +41710,6 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            console.log(this.props.site.siteIdent);
 	            var siteId = this.props.match.params.siteId;
 	
 	            var linkUrl = '/dashboard/' + siteId;
@@ -41765,14 +41756,6 @@
 	                                null,
 	                                this.props.site.siteName
 	                            ),
-	                            _react2.default.createElement(
-	                                'b',
-	                                null,
-	                                'Site Ident:'
-	                            ),
-	                            ' ',
-	                            this.props.site.siteIdent,
-	                            _react2.default.createElement('br', null),
 	                            _react2.default.createElement(
 	                                'b',
 	                                null,
@@ -42260,7 +42243,7 @@
 	                                _react2.default.createElement(
 	                                    _reactRouterDom.Link,
 	                                    { to: '/admin/sites' },
-	                                    _react2.default.createElement('img', { src: '/images/iot-site-2.png', className: 'img-fluid', width: '100%', height: 'auto' })
+	                                    _react2.default.createElement('img', { src: '/images/iot-site-2.png', className: 'mx-auto d-block', width: '200', height: '200' })
 	                                )
 	                            )
 	                        )
@@ -42286,7 +42269,7 @@
 	                                _react2.default.createElement(
 	                                    _reactRouterDom.Link,
 	                                    { to: '/admin/sensors' },
-	                                    _react2.default.createElement('img', { src: '/images/sensor-5.png', className: 'img-fluid', width: '100%', height: 'auto' })
+	                                    _react2.default.createElement('img', { src: '/images/sensor-5.png', className: 'mx-auto d-block', width: '200', height: '200' })
 	                                )
 	                            )
 	                        )
@@ -56258,11 +56241,6 @@
 	                        component: this.renderDisabledTextField
 	                    }),
 	                    _react2.default.createElement(_reduxForm.Field, {
-	                        label: 'SiteIdent',
-	                        name: 'siteIdent',
-	                        component: this.renderTextField
-	                    }),
-	                    _react2.default.createElement(_reduxForm.Field, {
 	                        label: 'siteName',
 	                        name: 'siteName',
 	                        component: this.renderTextField
@@ -56530,11 +56508,6 @@
 	                                })
 	                            )
 	                        ),
-	                        _react2.default.createElement(_reduxForm.Field, {
-	                            label: 'MachineId',
-	                            name: 'machineId',
-	                            component: this.renderDisabledTextField
-	                        }),
 	                        _react2.default.createElement(_reduxForm.Field, {
 	                            label: 'SensorGroupId',
 	                            name: 'sensorGroupId',

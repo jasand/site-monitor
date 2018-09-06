@@ -11,7 +11,6 @@ import java.util.List;
 public interface SiteService {
     List<Site> getSites();
     Site getSiteById(long id);
-    Site getSiteBySiteIdent(String siteIdent);
     Site createSite(Site site);
     Site updateSite(long id, Site site);
     void deleteSite(long id);

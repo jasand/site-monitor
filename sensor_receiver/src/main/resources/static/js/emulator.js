@@ -9,7 +9,6 @@
 var sensorHolder = {
     sensors : [
         {
-            siteIdent : "sensor-group-1",
             sensorIdent : "emulator-sensor-1",
             emulatorType : "sinusoidal",
             signalPeak : 750,
@@ -19,7 +18,6 @@ var sensorHolder = {
             sampleIndex : 0,
             isActive : true
         }, {
-            siteIdent : "sensor-group-1",
             sensorIdent : "emulator-sensor-2",
             emulatorType : "sinusoidal",
             signalPeak : 750,
@@ -29,7 +27,6 @@ var sensorHolder = {
             sampleIndex : 0,
             isActive : true
         }, {
-            siteIdent : "sensor-group-2",
             sensorIdent : "emulator-sensor-3",
             emulatorType : "triangle",
             signalPeak : 750,
@@ -39,7 +36,6 @@ var sensorHolder = {
             sampleIndex : 0,
             isActive : true
         }, {
-            siteIdent : "sensor-group-2",
             sensorIdent : "emulator-sensor-4",
             emulatorType : "random",
             signalPeak : 750,
@@ -136,7 +132,6 @@ $(document).ready(function () {
 
         $("#inputCreateBtn").click(function() {
             var sensor = {};
-            sensor.siteIdent = $("#inputSiteIdent").val();
             sensor.sensorIdent = $("#inputSensorIdent").val();
             sensor.emulatorType = $("#inputEmulatorType").val();
             sensor.signalPeak = Number($("#inputPeakValue").val());
@@ -196,12 +191,10 @@ function appendTemplate(template, data){
 function processEmulatorsAndPostEmulatedReadings() {
     console.log("Processing emulators");
     for (var i=0; i<sensorHolder.sensors.length; i++) {
-        //console.log("Processing sensor: " + sensors[i].id);
-        var siteIdent = sensorHolder.sensors[i].siteIdent;
         var sensorIdent = sensorHolder.sensors[i].sensorIdent;
         var rawValue = sensorHolder.sensors[i].sampleArray[sensorHolder.sensors[i].sampleIndex];
         if (sensorHolder.sensors[i].isActive) {
-            postEmulatedValue(siteIdent, sensorIdent, rawValue);
+            postEmulatedValue(sensorIdent, rawValue);
         }
         sensorHolder.sensors[i].sampleIndex++;
         if (sensorHolder.sensors[i].sampleIndex >= sensorHolder.sensors[i].sampleArray.length) {
@@ -270,9 +263,8 @@ function calculateRandomSignal(index) {
     console.log("Random: " + sensorHolder.sensors[index].sampleArray);
 }
 
-function postEmulatedValue(siteIdent, sensorIdent, value) {
+function postEmulatedValue(sensorIdent, value) {
     var postObj = {};
-    postObj.sensorGroupId = siteIdent;
     postObj.sensorId = sensorIdent;
     postObj.sensorValue = value;
     var jsonString = JSON.stringify(postObj);

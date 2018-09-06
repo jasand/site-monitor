@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
  */
 public class Site {
     private long id;
-    private String siteIdent;
     private String siteName;
     private String siteAddress;
     private String contactPerson;
@@ -24,7 +23,6 @@ public class Site {
 
     public Site(SiteEntity e, boolean deepCopy) {
         id = e.getId();
-        siteIdent = e.getSiteIdent();
         siteName = e.getSiteName();
         siteAddress = e.getSiteAddress();
         contactPerson = e.getContactPerson();
@@ -39,7 +37,6 @@ public class Site {
 
     public SiteEntity toSiteEntity() {
         SiteEntity e = new SiteEntity();
-        e.setSiteIdent(siteIdent);
         e.setSiteName(siteName);
         e.setSiteAddress(siteAddress);
         e.setContactPerson(contactPerson);
@@ -49,7 +46,6 @@ public class Site {
     }
 
     public SiteEntity copyToSiteEntity(SiteEntity e) {
-        e.setSiteIdent(siteIdent);
         e.setSiteName(siteName);
         e.setSiteAddress(siteAddress);
         e.setContactPerson(contactPerson);
@@ -64,14 +60,6 @@ public class Site {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public String getSiteIdent() {
-        return siteIdent;
-    }
-
-    public void setSiteIdent(String siteIdent) {
-        this.siteIdent = siteIdent;
     }
 
     public String getSiteName() {

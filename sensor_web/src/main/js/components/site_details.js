@@ -25,7 +25,6 @@ class SiteDetails extends Component {
     }
 
     render() {
-        console.log(this.props.site.siteIdent);
         const {siteId} = this.props.match.params;
         var linkUrl = '/dashboard/' + siteId;
         return (
@@ -42,7 +41,6 @@ class SiteDetails extends Component {
                     <div className="row">
                         <div className="col-md-6">
                             <h2>{this.props.site.siteName}</h2>
-                            <b>Site Ident:</b> {this.props.site.siteIdent}<br/>
                             <b>Address: </b> {this.props.site.siteAddress}<br/>
                         </div>
                         <div className="col-md-3">

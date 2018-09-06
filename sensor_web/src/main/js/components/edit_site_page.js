@@ -75,11 +75,6 @@ class EditSitePage extends Component {
                         component={this.renderDisabledTextField}
                     />
                     <Field
-                        label="SiteIdent"
-                        name="siteIdent"
-                        component={this.renderTextField}
-                    />
-                    <Field
                         label="siteName"
                         name="siteName"
                         component={this.renderTextField}

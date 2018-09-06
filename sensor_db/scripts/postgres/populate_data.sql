@@ -23,8 +23,8 @@ INSERT INTO users VALUES ('admin', 'passwd', true);
 INSERT INTO authorities VALUES ('jan', 'ROLE_USER');
 INSERT INTO authorities VALUES ('admin', 'ROLE_ADMIN');
 
-INSERT INTO sites VALUES(DEFAULT,'site-ident-1','JanBananSite',NULL,NULL,NULL,NULL,FALSE);
-INSERT INTO sites VALUES(DEFAULT,'site-ident-1','JanBananSite 2',NULL,NULL,NULL,NULL,FALSE);
+INSERT INTO sites VALUES(DEFAULT, 'JanBananSite',NULL,NULL,NULL,NULL,FALSE);
+INSERT INTO sites VALUES(DEFAULT, 'JanBananSite 2',NULL,NULL,NULL,NULL,FALSE);
 
 
 INSERT INTO public.sensor_groups (id, site_id, sensor_group_id, description, first_connect) VALUES (DEFAULT, 1, '013A00ABCDEF', null, '2018-02-25 20:40:27.441000');

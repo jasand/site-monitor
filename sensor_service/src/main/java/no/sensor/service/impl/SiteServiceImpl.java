@@ -63,16 +63,6 @@ public class SiteServiceImpl implements SiteService {
     }
 
     @Override
-    public Site getSiteBySiteIdent(String siteIdent) {
-        SiteEntity siteEntity = siteRepo.findBySiteIdent(siteIdent);
-        if (siteEntity == null) {
-            LOG.info("Site with site ident {} not found.", siteIdent);
-            throw new NotFoundException("Site with site ident " + siteIdent + "not found.");
-        }
-        return new Site(siteEntity, true);
-    }
-
-    @Override
     public Site createSite(Site site) {
         SiteEntity siteEntity = site.toSiteEntity();
         siteEntity = siteRepo.save(siteEntity);

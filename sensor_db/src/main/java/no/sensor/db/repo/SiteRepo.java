@@ -10,5 +10,4 @@ import org.springframework.data.repository.RepositoryDefinition;
 
 @RepositoryDefinition(domainClass=SiteEntity.class, idClass=Long.class)
 public interface SiteRepo extends JpaRepository<SiteEntity, Long> {
-    public SiteEntity findBySiteIdent(String siteIdent);
 }

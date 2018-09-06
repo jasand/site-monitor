@@ -40,17 +40,10 @@ public class SiteController {
     //----------------------------------------------
     @ResponseBody
     @RequestMapping(value = "/sites", method = RequestMethod.GET)
-    public List<Site> getSites(@RequestParam(value = "siteIdent", required = false) String siteIdent, HttpServletResponse response) {
-        List<Site> sites = new ArrayList<Site>();
-        if (siteIdent != null) {
-            Site site = siteService.getSiteBySiteIdent(siteIdent);
-            LOG.info("Returning site with ident " + siteIdent);
-            sites.add(site);
-
-        } else {
-            sites.addAll(siteService.getSites());
-            LOG.info("Returning sites :" + sites.size());
-        }
+    public List<Site> getSites(HttpServletResponse response) {
+        List<Site> sites = new ArrayList<>();
+        sites.addAll(siteService.getSites());
+        LOG.info("Returning sites :" + sites.size());
         return sites;
     }
 
@@ -92,14 +85,14 @@ public class SiteController {
     @ResponseBody
     @RequestMapping(value = "/sites/{siteId}/sensorgroups/{sensorGroupId}", method = RequestMethod.PUT)
     public SensorGroup addSiteSensor(@PathVariable long siteId,
-                                        @PathVariable long sensorGroupId) {
+                                     @PathVariable long sensorGroupId) {
         return siteService.addSensorGroup(siteId, sensorGroupId);
     }
 
     @ResponseBody
     @RequestMapping(value = "/sites/{siteId}/sensorgroups/{sensorGroupId}", method = RequestMethod.DELETE)
     public void removeSiteSensor(@PathVariable long siteId,
-                                    @PathVariable long sensorGroupId) {
+                                 @PathVariable long sensorGroupId) {
         siteService.removeSensorGroup(siteId, sensorGroupId);
     }
 
