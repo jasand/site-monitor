@@ -80,6 +80,11 @@ class EditSitePage extends Component {
                         component={this.renderTextField}
                     />
                     <Field
+                        label="description"
+                        name="description"
+                        component={this.renderTextField}
+                    />
+                    <Field
                         label="siteAddress"
                         name="siteAddress"
                         component={this.renderTextField}
@@ -97,6 +102,16 @@ class EditSitePage extends Component {
                     <Field
                         label="contactEmail"
                         name="contactEmail"
+                        component={this.renderTextField}
+                    />
+                    <Field
+                        label="lat"
+                        name="lat"
+                        component={this.renderTextField}
+                    />
+                    <Field
+                        label="lng"
+                        name="lng"
                         component={this.renderTextField}
                     />
                     <Field

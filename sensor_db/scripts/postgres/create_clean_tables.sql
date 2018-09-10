@@ -17,10 +17,13 @@ CREATE TABLE IF NOT EXISTS sensor_reading_queue (
 CREATE TABLE IF NOT EXISTS sites (
   id 					      bigserial primary key not null,
   site_name         text,
+  description       text,
   site_address		  text,
   contact_person    text,
   contact_phone     text,
   contact_email     text,
+  latitude          numeric(9,6),
+  longitude          numeric(9,6),
   deleted				    boolean
 );
 

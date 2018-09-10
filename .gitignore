@@ -14,7 +14,7 @@ proguard/
 
 **/bin/
 
-**/dist/
+dist/
 
 #node and angular ++
 bower_components/

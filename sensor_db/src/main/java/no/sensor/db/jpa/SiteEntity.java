@@ -20,6 +20,8 @@ public class SiteEntity {
     private Long id;
     @Column(name = "site_name")
     private String siteName;
+    @Column(name = "description")
+    private String description;
     @Column(name = "site_address")
     private String siteAddress;
     @Column(name = "contact_person")
@@ -28,13 +30,17 @@ public class SiteEntity {
     private String contactPhone;
     @Column(name = "contact_email")
     private String contactEmail;
+    @Column(name = "latitude")
+    private Double latitude;
+    @Column(name = "longitude")
+    private Double longitude;
     @Column(name = "deleted")
+    private Boolean deleted;
 
     @OneToMany(mappedBy="site", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
     private List<SensorGroupEntity> sensorGroups;
 
-    private Boolean deleted;
 
     public Long getId() {
         return id;
@@ -50,6 +56,14 @@ public class SiteEntity {
 
     public void setSiteName(String siteName) {
         this.siteName = siteName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getSiteAddress() {
@@ -90,6 +104,22 @@ public class SiteEntity {
 
     public void setSensorGroups(List<SensorGroupEntity> sensorGroups) {
         this.sensorGroups = sensorGroups;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     public Boolean isDeleted() {
