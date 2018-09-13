@@ -34,8 +34,6 @@ public class SiteEntity {
     private Double latitude;
     @Column(name = "longitude")
     private Double longitude;
-    @Column(name = "deleted")
-    private Boolean deleted;
 
     @OneToMany(mappedBy="site", fetch = FetchType.EAGER)
     @Fetch(FetchMode.SELECT)
@@ -122,11 +120,4 @@ public class SiteEntity {
         this.longitude = longitude;
     }
 
-    public Boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
 }

@@ -63,9 +63,6 @@ public class SensorEntity {
 
     @Column(name = "mute")
     private Boolean mute;
-    @Column(name = "deleted")
-    private Boolean deleted;
-
 
     public Long getId() {
         return id;
@@ -195,11 +192,4 @@ public class SensorEntity {
         this.mute = mute;
     }
 
-    public Boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
 }

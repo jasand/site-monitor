@@ -32,7 +32,6 @@ public class Sensor {
     private Date statusTime;
     private Boolean warningFlag;
     private Boolean mute;
-    private Boolean deleted;
 
     public Sensor() {
     }
@@ -58,7 +57,6 @@ public class Sensor {
             this.statusTime = timestampToDate(sensorEntity.getStatusTime());
         this.warningFlag = sensorEntity.getWarningFlag();
         this.mute = sensorEntity.isMute();
-        this.deleted = sensorEntity.isDeleted();
     }
 
     /**
@@ -85,7 +83,6 @@ public class Sensor {
         e.setStatusTime(dateToTimestamp(this.statusTime));
         e.setWarningFlag(this.warningFlag);
         e.setMute(this.mute);
-        e.setDeleted(this.deleted);
         return e;
     }
 
@@ -107,7 +104,6 @@ public class Sensor {
             e.setStatusTime(dateToTimestamp(this.statusTime));
         e.setWarningFlag(this.warningFlag);
         e.setMute(this.mute);
-        e.setDeleted(this.deleted);
         return e;
     }
 
@@ -249,11 +245,4 @@ public class Sensor {
         this.mute = mute;
     }
 
-    public Boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
 }

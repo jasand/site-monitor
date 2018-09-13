@@ -23,8 +23,7 @@ CREATE TABLE IF NOT EXISTS sites (
   contact_phone     text,
   contact_email     text,
   latitude          numeric(9,6),
-  longitude          numeric(9,6),
-  deleted				    boolean
+  longitude          numeric(9,6)
 );
 
 
@@ -58,8 +57,7 @@ CREATE TABLE IF NOT EXISTS sensors (
   status               text CHECK (status IN ('OK', 'WARN', 'ERR', 'NA')),
   status_time				   timestamp with time zone,
   warning_flag         boolean,
-  mute		       	     boolean,
-  deleted				       boolean
+  mute		       	     boolean
 );
 
 CREATE TABLE IF NOT EXISTS sensor_readings (
@@ -67,8 +65,7 @@ CREATE TABLE IF NOT EXISTS sensor_readings (
   sensor_id   bigint REFERENCES sensors (id),
   raw         numeric(15,5),
   value       numeric(15,5),
-  time        timestamp with time zone,
-  deleted     boolean
+  time        timestamp with time zone
 );
 
 CREATE TABLE IF NOT EXISTS users (

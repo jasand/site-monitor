@@ -26,8 +26,6 @@ public class SensorReadingEntity {
     private Double value;
     @Column(name = "time")
     private Timestamp time;
-    @Column(name = "deleted")
-    private Boolean deleted;
 
     public SensorReadingEntity() {
     }
@@ -37,7 +35,6 @@ public class SensorReadingEntity {
         this.raw = raw;
         this.value = value;
         this.time = received;
-        this.deleted = false;
     }
 
     public long getId() {
@@ -80,14 +77,6 @@ public class SensorReadingEntity {
         this.time = time;
     }
 
-    public Boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
-
     @Override
     public String toString() {
         return (new StringBuilder("SensorReadingEntity: id=").append(id).
@@ -95,7 +84,6 @@ public class SensorReadingEntity {
                 append(", raw=").append(raw)).
                 append(", value=").append(value).
                 append(", time=").append(time).
-                append(", deleted=").append(deleted).
                 toString();
 
     }

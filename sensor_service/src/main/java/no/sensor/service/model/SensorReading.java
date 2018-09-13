@@ -15,7 +15,6 @@ public class SensorReading {
     private Double value;
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssZ")
     private Date time;
-    private Boolean deleted;
 
     public SensorReading() {
     }
@@ -26,7 +25,6 @@ public class SensorReading {
         this.raw = e.getRaw();
         this.value = e.getValue();
         this.time = new Date(e.getTime().getTime());
-        this.deleted = e.isDeleted();
     }
 
     public Long getId() {
@@ -69,11 +67,4 @@ public class SensorReading {
         this.time = time;
     }
 
-    public Boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(Boolean deleted) {
-        this.deleted = deleted;
-    }
 }
