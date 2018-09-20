@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -34,12 +36,14 @@ public class SensorController {
     SensorService sensorService;
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/sensors", method = RequestMethod.GET)
     public List<Sensor> getSensors() {
         return sensorService.getAllSensors();
     }
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/sensors/{sensorId}", method = RequestMethod.GET)
     public Sensor findSensorById(@PathVariable long sensorId) {
         return sensorService.findSensorById(sensorId);
@@ -47,6 +51,7 @@ public class SensorController {
 
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/sensors/{sensorId}", method = RequestMethod.PUT)
     public Sensor updateSensor(@PathVariable long sensorId,
                                @RequestBody Sensor sensor) {
@@ -56,6 +61,7 @@ public class SensorController {
 
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/sensors/{sensorId}/readings", method = RequestMethod.GET)
     public List<SensorReading> getReadingsForSensorBetween(@PathVariable long sensorId,
                                                            @RequestParam(value = "from", required = false) String from,
@@ -96,12 +102,14 @@ public class SensorController {
 
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/units", method = RequestMethod.GET)
     public List<UnitOfMeasure> getUnitsOfMeasure() {
         return sensorService.getUnitsOfMeasure();
     }
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/sensortypes", method = RequestMethod.GET)
     public List<String> getLegalSensorTypes() {
         List<String> types = new ArrayList<>();
@@ -112,18 +120,21 @@ public class SensorController {
     }
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/sensorgroups", method = RequestMethod.GET)
     public List<SensorGroup> getAllSensorGroups() {
         return sensorService.getAllSensorGroups();
     }
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/sensorgroups/{id}", method = RequestMethod.GET)
     public SensorGroup getSensorGroup(@PathVariable("id") Long id) {
         return sensorService.findSensorGroupById(id);
     }
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/sensorgroups/{id}", method = RequestMethod.PUT)
     public SensorGroup updateSensorGroup(@PathVariable("id") Long id,
                                          @RequestBody SensorGroup sensorGroup) {
@@ -155,12 +166,12 @@ public class SensorController {
     // Exception handling
     //---------------------------------------------------------------------------
 
-//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-//    @ExceptionHandler(AccessDeniedException.class)
-//    @ResponseBody
-//    ErrorResponse handleAccessDeniedException(HttpServletRequest req, AccessDeniedException ex) {
-//        return new ErrorResponse("The current user does not have sufficient privileges.", ex.getMessage());
-//    }
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseBody
+    ErrorResponse handleAccessDeniedException(HttpServletRequest req, AccessDeniedException ex) {
+        return new ErrorResponse("The current user does not have sufficient privileges.", ex.getMessage());
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidInputException.class)

@@ -6,7 +6,7 @@ import AdminSiteItem from './admin_site_item';
 
 class AdminSites extends Component {
     componentDidMount() {
-        this.props.fetchSites();
+        this.props.fetchSites(this.props.login.token);
     }
 
     renderSiteItems() {
@@ -46,7 +46,10 @@ class AdminSites extends Component {
 }
 
 function mapStateToProps(state) {
-    return {sites: state.sites}
+    return {
+        sites: state.sites,
+        login: state.login
+    }
 }
 
 export default connect(mapStateToProps, {fetchSites})(AdminSites);

@@ -7,6 +7,7 @@ import SensorgroupReducer from './reducer_sensorgroup';
 import SensorReducer from './reducer_sensor';
 import UnitsReducer from './reducer_units';
 import SensorTypesReducer from './reducer_sensortypes';
+import LoginReducer from './reducer_login';
 
 
 const rootReducer = combineReducers({
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
     sensor: SensorReducer,
     units: UnitsReducer,
     sensortypes: SensorTypesReducer,
+    login: LoginReducer,
     form: formReducer
 });
 

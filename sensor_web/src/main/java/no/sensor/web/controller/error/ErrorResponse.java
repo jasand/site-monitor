@@ -5,6 +5,7 @@ package no.sensor.web.controller.error;
  */
 public class ErrorResponse {
     private String message;
+    private String error;
     private String cause;
 
     public ErrorResponse() {

@@ -69,13 +69,28 @@ CREATE TABLE IF NOT EXISTS sensor_readings (
 );
 
 CREATE TABLE IF NOT EXISTS users (
-  username varchar(50) not null primary key,
+  id       bigserial primary key not null,
+  username varchar(50) not null,
   password varchar(50) not null,
-  enabled boolean not null);
+  enabled  boolean not null
+);
 
-CREATE TABLE IF NOT EXISTS authorities (
-  username varchar(50) not null REFERENCES users (username),
-  authority varchar(50) not null);
+CREATE TABLE IF NOT EXISTS roles (
+  id    bigserial primary key not null,
+  role  varchar(50) not null
+);
 
-create unique index ix_auth_username on authorities (username,authority);
+CREATE TABLE IF NOT EXISTS user_roles (
+  userid BIGINT REFERENCES users (id),
+  roleid BIGINT REFERENCES roles (id)
+);
+
+CREATE TABLE IF NOT EXISTS user_sessions (
+  token    varchar(50) not null primary key,
+  username varchar(50) not null,
+  expires  timestamp with time zone not null
+);
+
+
+create unique index idx_username on users (username);
 

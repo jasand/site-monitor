@@ -6,8 +6,8 @@ import AdminSensorGroupItem from './admin_sensor_group_item'
 
 class AdminSensors extends Component {
     componentDidMount() {
-        this.props.fetchSensorgroups();
-        this.props.fetchSites();
+        this.props.fetchSensorgroups(this.props.login.token);
+        this.props.fetchSites(this.props.login.token);
     }
 
     renderSensorgroups() {
@@ -40,7 +40,8 @@ class AdminSensors extends Component {
 function mapStateToProps(state) {
     return {
         sensorgroups: state.sensorgroups,
-        sites: state.sites
+        sites: state.sites,
+        login: state.login
     }
 }
 

@@ -2,13 +2,12 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {fetchSite} from '../actions';
-import MachineDetails from './machine_details';
 import SensorGroupDetails from './sensor_group_details';
 
 class SiteDetails extends Component {
     componentDidMount() {
         const {siteId} = this.props.match.params;
-        this.props.fetchSite(siteId);
+        this.props.fetchSite(siteId, this.props.login.token);
     }
 
 
@@ -59,7 +58,10 @@ class SiteDetails extends Component {
 }
 
 function mapStateToProps(state) {
-    return {site: state.site}
+    return {
+        site: state.site,
+        login: state.login
+    }
 }
 
 export default connect(mapStateToProps, {fetchSite})(SiteDetails);

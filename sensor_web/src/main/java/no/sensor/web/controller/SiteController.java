@@ -12,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -40,6 +42,7 @@ public class SiteController {
     //----------------------------------------------
     @ResponseBody
     @RequestMapping(value = "/sites", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_USER')")
     public List<Site> getSites(HttpServletResponse response) {
         List<Site> sites = new ArrayList<>();
         sites.addAll(siteService.getSites());
@@ -50,17 +53,20 @@ public class SiteController {
 
     @ResponseBody
     @RequestMapping(value = "/sites/{siteId}", method = RequestMethod.GET)
+    @PreAuthorize("hasRole('ROLE_USER')")
     public Site getSite(@PathVariable long siteId, HttpServletResponse response) {
         return siteService.getSiteById(siteId);
     }
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/sites", method = RequestMethod.POST)
     public Site createSite(@RequestBody Site site) {
         return siteService.createSite(site);
     }
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/sites/{siteId}", method = RequestMethod.PUT)
     public Site updateSite(@PathVariable long siteId,
                            @RequestBody Site site,
@@ -68,6 +74,7 @@ public class SiteController {
         return siteService.updateSite(siteId, site);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/sites/{siteId}", method = RequestMethod.DELETE)
     public void deleteSite(@PathVariable long siteId,
                            HttpServletResponse response) {
@@ -76,6 +83,7 @@ public class SiteController {
 
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_USER')")
     @RequestMapping(value = "/sites/{siteId}/sensorgroups", method = RequestMethod.GET)
     public List<SensorGroup> getSiteSensors(@PathVariable long siteId) {
         return siteService.getSiteSensorGroups(siteId);
@@ -83,6 +91,7 @@ public class SiteController {
 
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/sites/{siteId}/sensorgroups/{sensorGroupId}", method = RequestMethod.PUT)
     public SensorGroup addSiteSensor(@PathVariable long siteId,
                                      @PathVariable long sensorGroupId) {
@@ -90,6 +99,7 @@ public class SiteController {
     }
 
     @ResponseBody
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/sites/{siteId}/sensorgroups/{sensorGroupId}", method = RequestMethod.DELETE)
     public void removeSiteSensor(@PathVariable long siteId,
                                  @PathVariable long sensorGroupId) {
@@ -101,12 +111,12 @@ public class SiteController {
     // Exception handling
     //---------------------------------------------------------------------------
 
-//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-//    @ExceptionHandler(AccessDeniedException.class)
-//    @ResponseBody
-//    ErrorResponse handleAccessDeniedException(HttpServletRequest req, AccessDeniedException ex) {
-//        return new ErrorResponse("The current user does not have sufficient privileges.", ex.getMessage());
-//    }
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseBody
+    ErrorResponse handleAccessDeniedException(HttpServletRequest req, AccessDeniedException ex) {
+        return new ErrorResponse("The current user does not have sufficient privileges.", ex.getMessage());
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(InvalidInputException.class)

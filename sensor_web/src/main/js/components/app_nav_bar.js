@@ -40,6 +40,12 @@ class AppNavBar extends Component {
                                 Admin
                             </Link>
                         </li>
+                        <li className="nav-divider">&nbsp;&nbsp;</li>
+                        <li className="nav-item">
+                            <Link className="navbar-link" to="/login">
+                                Login
+                            </Link>
+                        </li>
                     </ul>
                 </div>
             </nav>

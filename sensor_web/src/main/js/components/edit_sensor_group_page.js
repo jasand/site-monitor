@@ -8,8 +8,8 @@ import {connect} from "react-redux";
 class EditSensorGroupPage extends Component {
     componentDidMount() {
         const {id} = this.props.match.params;
-        this.props.fetchSensorgroup(id);
-        this.props.fetchSites();
+        this.props.fetchSensorgroup(id, this.props.login.token);
+        this.props.fetchSites(this.props.login.token);
     }
 
     // TODO: Sjekk denne for CSS: https://redux-form.com/7.4.2/bundle.css (https://redux-form.com/7.4.2/examples/initializefromstate/)
@@ -125,6 +125,7 @@ function mapStateToProps(state) {
     return {
         sensorgroup: state.sensorgroup,
         sites: state.sites,
+        login: state.login,
         initialValues: initVals
     }
 }

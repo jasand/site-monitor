@@ -18,6 +18,7 @@ import NewSitePage from './components/new_site_page';
 import EditSitePage from './components/edit_site_page';
 import EditSensorGroupPage from './components/edit_sensor_group_page';
 import EditSensorPage from './components/edit_sensor_page';
+import LoginPage from './components/login_page';
 import reducers from './reducers';
 
 const createStoreWithMiddleware = applyMiddleware(ReduxPromise)(createStore);
@@ -40,6 +41,7 @@ ReactDOM.render(
                         <Route path="/admin/sensors/:id" component={EditSensorPage}/>
                         <Route path="/admin/sensors" component={AdminSensors}/>
                         <Route path="/admin" component={AdminPage}/>
+                        <Route path="/login" component={LoginPage}/>
                         <Route path="/" component={LandingPage}/>
                     </Switch>
                 </div>

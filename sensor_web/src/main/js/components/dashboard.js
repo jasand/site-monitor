@@ -6,7 +6,7 @@ import SiteIndexCard from './site_index_card';
 
 class Dashboard extends Component {
     componentDidMount() {
-        this.props.fetchSites();
+        this.props.fetchSites(this.props.login.token);
     }
 
     renderSites() {
@@ -27,7 +27,10 @@ class Dashboard extends Component {
 }
 
 function mapStateToProps(state) {
-    return {sites: state.sites}
+    return {
+        sites: state.sites,
+        login: state.login
+    }
 }
 
 export default connect(mapStateToProps, {fetchSites})(Dashboard);

@@ -17,11 +17,15 @@ INSERT INTO units_of_measure VALUES(DEFAULT, 'Ampere', 'A');
 INSERT INTO units_of_measure VALUES(DEFAULT, 'Omdreininger per minutt', 'o/min');
 INSERT INTO units_of_measure VALUES(DEFAULT, 'Omdreininger', 'Revs');
 
-INSERT INTO users VALUES ('jan', 'passwd', true);
-INSERT INTO users VALUES ('admin', 'passwd', true);
+INSERT INTO users VALUES (DEFAULT, 'jan', 'passwd', true);
+INSERT INTO users VALUES (DEFAULT, 'admin', 'passwd', true);
 
-INSERT INTO authorities VALUES ('jan', 'ROLE_USER');
-INSERT INTO authorities VALUES ('admin', 'ROLE_ADMIN');
+INSERT INTO roles VALUES (DEFAULT , 'ROLE_USER');
+INSERT INTO roles VALUES (DEFAULT , 'ROLE_ADMIN');
+
+INSERT INTO user_roles VALUES (1 , 1);
+INSERT INTO user_roles VALUES (2 , 2);
+
 
 INSERT INTO sites VALUES(DEFAULT, 'JanBananSite', 'Description', NULL,NULL,NULL,NULL,NULL,NULL);
 INSERT INTO sites VALUES(DEFAULT, 'JanBananSite 2', 'Description', NULL,NULL,NULL,NULL,NULL,NULL);

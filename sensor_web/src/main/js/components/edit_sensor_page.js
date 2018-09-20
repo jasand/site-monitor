@@ -7,10 +7,10 @@ import {Field, reduxForm} from 'redux-form';
 class EditSensorPage extends Component {
     componentDidMount() {
         const {id} = this.props.match.params;
-        this.props.fetchSensor(id);
-        this.props.fetchSites();
-        this.props.fetchUnits();
-        this.props.fetchSensortypes();
+        this.props.fetchSensor(id, this.props.login.token);
+        this.props.fetchSites(this.props.login.token);
+        this.props.fetchUnits(this.props.login.token);
+        this.props.fetchSensortypes(this.props.login.token);
     }
 
     // TODO: Sjekk denne for CSS: https://redux-form.com/7.4.2/bundle.css (https://redux-form.com/7.4.2/examples/initializefromstate/)
@@ -72,7 +72,7 @@ class EditSensorPage extends Component {
             }
         });
         console.log(sensor);
-        this.props.updateSensor(sensor, () => {
+        this.props.updateSensor(sensor, this.props.login.token, () => {
             this.props.history.push('/admin/sensors');
         });
     }
@@ -205,6 +205,7 @@ function mapStateToProps(state) {
         sites: state.sites,
         units: state.units,
         sensortypes: state.sensortypes,
+        login: state.login,
         initialValues: state.sensor
     }
 }

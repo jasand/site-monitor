@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 class EditSitePage extends Component {
     componentDidMount() {
         const {siteId} = this.props.match.params;
-        this.props.fetchSite(siteId);
+        this.props.fetchSite(siteId, this.props.login.token);
     }
 
     renderTextField(field) {
@@ -45,7 +45,7 @@ class EditSitePage extends Component {
     onSubmit(site) {
         console.log("SUBMIT...");
         console.log(site);
-        this.props.updateSite(site, () => {
+        this.props.updateSite(site, this.props.login.token, () => {
             this.props.history.push('/admin/sites');
         });
     }
@@ -139,6 +139,7 @@ function mapStateToProps(state) {
     var initVals = state.site
     return {
         site: state.site,
+        login: state.login,
         initialValues: initVals
     }
 }

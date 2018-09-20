@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export const LOGIN = 'login';
+export const LOGOUT = 'logout';
 export const FETCH_SITES = 'fetch_sites';
 export const FETCH_SITE = 'fetch_site';
 export const UPDATE_SITE = 'update_site';
@@ -15,8 +17,27 @@ export const FETCH_SENSORTYPES = 'fetch_sensortypes';
 
 const ROOT_URL = 'http://localhost:8080/api';
 
-export function fetchSites() {
-    const request = axios.get(`${ROOT_URL}/sites`);
+export function login(loginData, callback) {
+    const request = axios.post(`${ROOT_URL}/login`, loginData); //.then((res) => callback(res));
+    console.log("Logging in...");
+    return {
+        type: LOGIN,
+        payload: request
+    };
+};
+
+export function logout(token, callback) {
+    const request = axios.delete(`${ROOT_URL}/logout/${token}`).then(() => callback());
+    console.log("Logging out...");
+    return {
+        type: LOGOUT,
+        payload: request
+    };
+};
+
+export function fetchSites(token) {
+    console.log("Token: " + token);
+    const request = axios.get(`${ROOT_URL}/sites`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching sites");
     return {
         type: FETCH_SITES,
@@ -24,8 +45,8 @@ export function fetchSites() {
     };
 };
 
-export function fetchSite(siteId) {
-    const request = axios.get(`${ROOT_URL}/sites/${siteId}`);
+export function fetchSite(siteId, token) {
+    const request = axios.get(`${ROOT_URL}/sites/${siteId}`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching site " + siteId);
     return {
         type: FETCH_SITE,
@@ -33,8 +54,9 @@ export function fetchSite(siteId) {
     };
 };
 
-export function updateSite(site, callback) {
-    const request = axios.put(`${ROOT_URL}/sites/${site.id}`, site).then(() => callback());
+export function updateSite(site, token, callback) {
+    const request = axios.put(`${ROOT_URL}/sites/${site.id}`, site,
+        { headers: { 'X-Auth-Token': token  } }).then(() => callback());
     console.log("Updating site " + site.id);
     return {
         type: UPDATE_SITE,
@@ -42,8 +64,9 @@ export function updateSite(site, callback) {
     };
 };
 
-export function createSite(site, callback) {
-    const request = axios.post(`${ROOT_URL}/sites`, site).then(() => callback());
+export function createSite(site, token, callback) {
+    const request = axios.post(`${ROOT_URL}/sites`, site,
+        { headers: { 'X-Auth-Token': token  } }).then(() => callback());
     console.log("Creating site...");
     return {
         type: CREATE_SITE,
@@ -51,8 +74,9 @@ export function createSite(site, callback) {
     };
 }
 
-export function deleteSite(siteId, callback) {
-    const request = axios.delete(`${ROOT_URL}/sites/${siteId}`).then(() => callback());
+export function deleteSite(siteId, token, callback) {
+    const request = axios.delete(`${ROOT_URL}/sites/${siteId}`,
+        { headers: { 'X-Auth-Token': token  } }).then(() => callback());
     console.log("Deleting site...");
     return {
         type: DELETE_SITE,
@@ -60,8 +84,8 @@ export function deleteSite(siteId, callback) {
     };
 }
 
-export function fetchSensorgroups() {
-    const request = axios.get(`${ROOT_URL}/sensorgroups`);
+export function fetchSensorgroups(token) {
+    const request = axios.get(`${ROOT_URL}/sensorgroups`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching sensorgroups");
     return {
         type: FETCH_SENSORGROUPS,
@@ -69,8 +93,8 @@ export function fetchSensorgroups() {
     };
 };
 
-export function fetchSensorgroup(id) {
-    const request = axios.get(`${ROOT_URL}/sensorgroups/${id}`);
+export function fetchSensorgroup(id, token) {
+    const request = axios.get(`${ROOT_URL}/sensorgroups/${id}`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching sensorgroup " + id);
     return {
         type: FETCH_SENSORGROUP,
@@ -78,8 +102,9 @@ export function fetchSensorgroup(id) {
     };
 };
 
-export function updateSensorgroup(sensorGroup, callback) {
-    const request = axios.put(`${ROOT_URL}/sensorgroups/${sensorGroup.id}`, sensorGroup).then(() => callback());
+export function updateSensorgroup(sensorGroup, token, callback) {
+    const request = axios.put(`${ROOT_URL}/sensorgroups/${sensorGroup.id}`, sensorGroup,
+        { headers: { 'X-Auth-Token': token  } }).then(() => callback());
     console.log("Updating sensorgroup " + sensorGroup.id);
     return {
         type: UPDATE_SENSORGROUP,
@@ -87,8 +112,8 @@ export function updateSensorgroup(sensorGroup, callback) {
     };
 };
 
-export function fetchSensor(id) {
-    const request = axios.get(`${ROOT_URL}/sensors/${id}`);
+export function fetchSensor(id, token) {
+    const request = axios.get(`${ROOT_URL}/sensors/${id}`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching sensor " + id);
     return {
         type: FETCH_SENSOR,
@@ -96,8 +121,9 @@ export function fetchSensor(id) {
     };
 };
 
-export function updateSensor(sensor, callback) {
-    const request = axios.put(`${ROOT_URL}/sensors/${sensor.id}`, sensor).then(() => callback());
+export function updateSensor(sensor, token, callback) {
+    const request = axios.put(`${ROOT_URL}/sensors/${sensor.id}`, sensor,
+        { headers: { 'X-Auth-Token': token  } }).then(() => callback());
     console.log("Updating sensor " + sensor.id);
     return {
         type: UPDATE_SENSOR,
@@ -105,8 +131,8 @@ export function updateSensor(sensor, callback) {
     };
 };
 
-export function fetchUnits() {
-    const request = axios.get(`${ROOT_URL}/units`);
+export function fetchUnits(token) {
+    const request = axios.get(`${ROOT_URL}/units`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching units");
     return {
         type: FETCH_UNITS,
@@ -114,8 +140,8 @@ export function fetchUnits() {
     };
 };
 
-export function fetchSensortypes() {
-    const request = axios.get(`${ROOT_URL}/sensortypes`);
+export function fetchSensortypes(token) {
+    const request = axios.get(`${ROOT_URL}/sensortypes`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching sensortypes");
     return {
         type: FETCH_SENSORTYPES,

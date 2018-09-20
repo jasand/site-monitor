@@ -19,7 +19,7 @@ class NewSitePage extends Component {
     }
 
     onSubmit(site) {
-        this.props.createSite(site, () => {
+        this.props.createSite(site, this.props.login.token, this.props.login.token, () => {
             this.props.history.push('/admin/sites');
         });
     }
@@ -80,8 +80,14 @@ class NewSitePage extends Component {
     }
 }
 
+function mapStateToProps(state) {
+    return {
+        login: state.login
+    }
+}
+
 export default reduxForm({
     form: 'NewSiteForm'
 })(
-    connect(null, { createSite })(NewSitePage)
+    connect(mapStateToProps, { createSite })(NewSitePage)
 );
