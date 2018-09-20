@@ -46,7 +46,7 @@ class EditSensorGroupPage extends Component {
             sensorGroup.siteId = null;
         }
         console.log(sensorGroup);
-        this.props.updateSensorgroup(sensorGroup, () => {
+        this.props.updateSensorgroup(sensorGroup, this.props.login.token, () => {
             this.props.history.push('/admin/sensors');
         });
     }
@@ -120,7 +120,6 @@ class EditSensorGroupPage extends Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state.sensorgroup)
     var initVals = state.sensorgroup
     return {
         sensorgroup: state.sensorgroup,

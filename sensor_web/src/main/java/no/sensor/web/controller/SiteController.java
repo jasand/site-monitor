@@ -42,7 +42,7 @@ public class SiteController {
     //----------------------------------------------
     @ResponseBody
     @RequestMapping(value = "/sites", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public List<Site> getSites(HttpServletResponse response) {
         List<Site> sites = new ArrayList<>();
         sites.addAll(siteService.getSites());
@@ -53,7 +53,7 @@ public class SiteController {
 
     @ResponseBody
     @RequestMapping(value = "/sites/{siteId}", method = RequestMethod.GET)
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     public Site getSite(@PathVariable long siteId, HttpServletResponse response) {
         return siteService.getSiteById(siteId);
     }
@@ -83,7 +83,7 @@ public class SiteController {
 
 
     @ResponseBody
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')")
     @RequestMapping(value = "/sites/{siteId}/sensorgroups", method = RequestMethod.GET)
     public List<SensorGroup> getSiteSensors(@PathVariable long siteId) {
         return siteService.getSiteSensorGroups(siteId);
