@@ -31,49 +31,28 @@ import java.util.Properties;
 })
 public class DatabaseConfiguration {
     public static Logger log = LoggerFactory.getLogger(DatabaseConfiguration.class);
-//
-//    @Bean
-//    public DataSource dataSource(Environment environment) {
-//        BasicDataSource dataSource = new BasicDataSource();
-//        dataSource.setDriverClassName(environment.getRequiredProperty("db.driver"));
-//        dataSource.setUrl(environment.getRequiredProperty("db.url"));
-//        dataSource.setUsername(environment.getRequiredProperty("db.username"));
-//        dataSource.setPassword(environment.getRequiredProperty("db.password"));
-//        return dataSource;
-//    }
-//
-//    @Bean
-//    LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource, Environment env) {
-//        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-//        entityManagerFactoryBean.setDataSource(dataSource);
-//        entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
-//        entityManagerFactoryBean.setPackagesToScan("no.sensor.db");
-//
-//        Properties jpaProperties = new Properties();
-//        jpaProperties.put("hibernate.dialect", env.getRequiredProperty("hibernate.dialect"));
-//        jpaProperties.put("hibernate.hbm2ddl.auto", env.getRequiredProperty("hibernate.hbm2ddl.auto"));
-//        jpaProperties.put("hibernate.ejb.naming_strategy", env.getRequiredProperty("hibernate.ejb.naming_strategy"));
-//        jpaProperties.put("hibernate.show_sql", env.getRequiredProperty("hibernate.show_sql"));
-//        jpaProperties.put("hibernate.format_sql", env.getRequiredProperty("hibernate.format_sql"));
-//        String currentSchema = env.getProperty("hibernate.default_schema");
-//
-//        if (currentSchema != null) {
-//            jpaProperties.put("hibernate.default_schema", currentSchema);
-//            log.info("hibernate.default_schema=" + currentSchema);
-//        }
-//
-//        // Må visst ha Hibernate 4.1.4.Final for at denne skal virke skikkelig...
-//        jpaProperties.put("javax.persistence.lock.timeout", 0);
-//
-//        entityManagerFactoryBean.setJpaProperties(jpaProperties);
-//
-//        return entityManagerFactoryBean;
-//    }
-//
-//    @Bean
-//    public PlatformTransactionManager transactionManager(LocalContainerEntityManagerFactoryBean entityManagerFactory) {
-//        JpaTransactionManager transactionManager = new JpaTransactionManager();
-//        transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
-//        return transactionManager;
-//    }
+
+    @Bean
+    public DataSource dataSource(Environment environment) {
+        BasicDataSource dataSource = new BasicDataSource();
+        if (System.getenv("RDS_HOSTNAME") != null) {
+            String dbName = System.getenv("RDS_DB_NAME");
+            String userName = System.getenv("RDS_USERNAME");
+            String password = System.getenv("RDS_PASSWORD");
+            String hostname = System.getenv("RDS_HOSTNAME");
+            String port = System.getenv("RDS_PORT");
+            String jdbcUrl = "jdbc:postgresql://" + hostname + ":" + port + "/" + dbName;
+            dataSource.setDriverClassName(environment.getRequiredProperty("db.driver.classname"));
+            dataSource.setUrl(jdbcUrl);
+            dataSource.setUsername(userName);
+            dataSource.setPassword(password);
+        } else {
+            dataSource.setDriverClassName(environment.getRequiredProperty("db.driver.classname"));
+            dataSource.setUrl(environment.getRequiredProperty("spring.datasource.url"));
+            dataSource.setUsername(environment.getRequiredProperty("spring.datasource.username"));
+            dataSource.setPassword(environment.getRequiredProperty("spring.datasource.password"));
+        }
+        return dataSource;
+    }
+
 }
