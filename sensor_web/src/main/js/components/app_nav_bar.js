@@ -30,43 +30,6 @@ class AppNavBar extends Component {
                     </ul>
                 </div>
             );
-        } else if (isAdminUser) {
-            return (
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-divider">&nbsp;&nbsp;</li>
-                        <li className="nav-item active">
-                            <Link className="navbar-link" to="/">
-                                Site Monitor
-                            </Link>
-                        </li>
-                        <li className="nav-divider">&nbsp;&nbsp;</li>
-                        <li className="nav-item">
-                            <Link className="navbar-link" to="/dashboard">
-                                Dashboard
-                            </Link>
-                        </li>
-                        <li className="nav-divider">&nbsp;&nbsp;</li>
-                        <li className="nav-item">
-                            <Link className="navbar-link" to="/reports">
-                                Reports
-                            </Link>
-                        </li>
-                        <li className="nav-divider">&nbsp;&nbsp;</li>
-                        <li className="nav-item">
-                            <Link className="navbar-link" to="/admin">
-                                Admin
-                            </Link>
-                        </li>
-                        <li className="nav-divider">&nbsp;&nbsp;</li>
-                        <li className="nav-item">
-                            <Link className="navbar-link" to="/" onClick={() => console.log("LOGOUT")}>
-                                Logout
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
-            );
         } else {
             return (
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -90,6 +53,8 @@ class AppNavBar extends Component {
                             </Link>
                         </li>
                         <li className="nav-divider">&nbsp;&nbsp;</li>
+                        { isAdminUser ?  this.renderAdminItem() : '' }
+                        { isAdminUser ?  (<li className="nav-divider">&nbsp;&nbsp;</li>) : '' }
                         <li className="nav-item">
                             <Link className="navbar-link" to="/" onClick={() => console.log("LOGOUT")}>
                                 Logout
@@ -100,6 +65,17 @@ class AppNavBar extends Component {
             );
         }
     }
+
+    renderAdminItem() {
+        return (
+            <li className="nav-item">
+                <Link className="navbar-link" to="/admin">
+                    Admin
+                </Link>
+            </li>
+        );
+    }
+
 
     render() {
         return (
@@ -113,47 +89,6 @@ class AppNavBar extends Component {
                     <span className="navbar-toggler-icon"></span>
                 </button>
                 {this.renderMenuItems()}
-
-                {/*<div className="collapse navbar-collapse" id="navbarSupportedContent">*/}
-                {/*<ul className="navbar-nav mr-auto">*/}
-                {/*<li className="nav-divider">&nbsp;&nbsp;</li>*/}
-                {/*<li className="nav-item active">*/}
-                {/*<Link className="navbar-link" to="/">*/}
-                {/*Site Monitor*/}
-                {/*</Link>*/}
-                {/*</li>*/}
-                {/*<li className="nav-divider">&nbsp;&nbsp;</li>*/}
-                {/*<li className="nav-item">*/}
-                {/*<Link className="navbar-link" to="/dashboard">*/}
-                {/*Dashboard*/}
-                {/*</Link>*/}
-                {/*</li>*/}
-                {/*<li className="nav-divider">&nbsp;&nbsp;</li>*/}
-                {/*<li className="nav-item">*/}
-                {/*<Link className="navbar-link" to="/reports">*/}
-                {/*Reports*/}
-                {/*</Link>*/}
-                {/*</li>*/}
-                {/*<li className="nav-divider">&nbsp;&nbsp;</li>*/}
-                {/*<li className="nav-item">*/}
-                {/*<Link className="navbar-link" to="/admin">*/}
-                {/*Admin*/}
-                {/*</Link>*/}
-                {/*</li>*/}
-                {/*<li className="nav-divider">&nbsp;&nbsp;</li>*/}
-                {/*<li className="nav-item">*/}
-                {/*<Link className="navbar-link" to="/login">*/}
-                {/*Login*/}
-                {/*</Link>*/}
-                {/*</li>*/}
-                {/*<li className="nav-divider">&nbsp;&nbsp;</li>*/}
-                {/*<li className="nav-item">*/}
-                {/*<Link className="navbar-link" to="/" onClick={() => console.log("LOGOUT")}>*/}
-                {/*Logout*/}
-                {/*</Link>*/}
-                {/*</li>*/}
-                {/*</ul>*/}
-                {/*</div>*/}
             </nav>
         );
     }
