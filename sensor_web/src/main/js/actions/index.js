@@ -27,7 +27,7 @@ export function login(loginData, callback) {
 };
 
 export function logout(token, callback) {
-    const request = axios.delete(`${ROOT_URL}/logout/${token}`).then(() => callback());
+    const request = axios.delete(`${ROOT_URL}/logout/${token}`);//.then(() => callback());
     console.log("Logging out...");
     return {
         type: LOGOUT,

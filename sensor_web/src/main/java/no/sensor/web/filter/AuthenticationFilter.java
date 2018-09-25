@@ -22,6 +22,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.stream.Collectors;
 
 public class AuthenticationFilter extends GenericFilterBean {
@@ -47,11 +48,13 @@ public class AuthenticationFilter extends GenericFilterBean {
             if (token.isPresent()) {
                 logger.debug("Trying to authenticate user by X-Auth-Token method. Token: " +  token.toString());
                 AuthResponse authResponse = authService.getAuthForToken(token.get());
-                ApiAuthentication apiAuthentication =
-                        new ApiAuthentication(authResponse.getUserName(),
-                                authResponse.getRoles().stream().map(r -> new SimpleGrantedAuthority(r)).collect(Collectors.toList()));
-                SecurityContextHolder.getContext().setAuthentication(apiAuthentication);
-                logger.debug("AUTH...");
+                if (authResponse.getExpires().after(new Date())) {
+                    ApiAuthentication apiAuthentication =
+                            new ApiAuthentication(authResponse.getUserName(),
+                                    authResponse.getRoles().stream().map(r -> new SimpleGrantedAuthority(r)).collect(Collectors.toList()));
+                    SecurityContextHolder.getContext().setAuthentication(apiAuthentication);
+                    logger.debug("AUTH...");
+                }
             }
 
             logger.debug("AuthenticationFilter is passing request down the filter chain");

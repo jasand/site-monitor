@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import {logout} from '../actions';
 
 //---------------------------------------------------------------
 // Top navbar menu
@@ -56,7 +57,10 @@ class AppNavBar extends Component {
                         { isAdminUser ?  this.renderAdminItem() : '' }
                         { isAdminUser ?  (<li className="nav-divider">&nbsp;&nbsp;</li>) : '' }
                         <li className="nav-item">
-                            <Link className="navbar-link" to="/" onClick={() => console.log("LOGOUT")}>
+                            <Link className="navbar-link" to="/" onClick={() => {
+                                console.log("LOGOUT");
+                                this.props.logout(this.props.login.token);
+                            }}>
                                 Logout
                             </Link>
                         </li>
@@ -100,4 +104,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps)(AppNavBar);
+export default connect(mapStateToProps, {logout})(AppNavBar);

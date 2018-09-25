@@ -27,4 +27,9 @@ public class AuthController {
         response.addCookie(new Cookie("X-Auth-Token", authResponse.getToken()));
         return authResponse;
     }
+
+    @RequestMapping(value = "/logout/{token}", method = RequestMethod.DELETE, produces = "application/json")
+    public void logout(@PathVariable String token, HttpServletResponse response) {
+        authService.logout(token);
+    }
 }

@@ -62,7 +62,14 @@ public class AuthServiceImpl implements AuthService {
         throw new AuthException("User not authorized");
     }
 
-
+    @Override
+    public void logout(String token) {
+        UserSessionEntity userSessionEntity = userSessionRepo.findOne(token);
+        if (userSessionEntity != null) {
+            userSessionEntity.setExpires(new Timestamp(System.currentTimeMillis()));
+            userSessionRepo.save(userSessionEntity);
+        }
+    }
 
     private boolean validUseNameAndPassword(AuthRequest authRequest) {
         UserEntity userEntity = userRepo.findByUserName(authRequest.getUserName());

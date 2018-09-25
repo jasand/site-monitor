@@ -1,13 +1,13 @@
-import {LOGIN} from '../actions';
+import {LOGIN, LOGOUT} from '../actions';
 
 export default function(state = {}, action) {
-    //console.log("LOGIN: ");
-    //console.log(action);
     switch (action.type) {
         case LOGIN:
-            console.log("LOGIN: ");
-            console.log(action);
+            console.log("LOGIN reducer.");
             return action.payload.data;
+        case LOGOUT:
+            console.log("LOGOUT reducer.");
+            return {};
         default:
             return state;
     }
