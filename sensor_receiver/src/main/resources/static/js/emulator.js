@@ -269,16 +269,16 @@ function postEmulatedValue(sensorIdent, value) {
     postObj.sensorValue = value;
     var jsonString = JSON.stringify(postObj);
     console.log("JSON string: " + jsonString);
-    $.ajax({
-        type: "POST",
-        url: "./basic",
-        data: jsonString,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function(data){console.log("Data OK: " + data);},
-        failure: function(errMsg) {
-            console.log("Error posting: " + errMsg);
-        }
-    });
+    // $.ajax({
+    //     type: "POST",
+    //     url: "./basic",
+    //     data: jsonString,
+    //     contentType: "application/json; charset=utf-8",
+    //     dataType: "json",
+    //     success: function(data){console.log("Data OK: " + data);},
+    //     failure: function(errMsg) {
+    //         console.log("Error posting: " + errMsg);
+    //     }
+    // });
 }
 
