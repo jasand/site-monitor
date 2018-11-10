@@ -2,11 +2,14 @@ package no.sensor.service.conversion;
 
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Created by jasand on 22.11.2016.
  */
 public class SensorValueConverter {
+    static final Logger LOG = LoggerFactory.getLogger(SensorValueConverter.class);
 
     public static Double convertRawValue(Double raw, String conversionFunc) {
         //
@@ -22,7 +25,14 @@ public class SensorValueConverter {
                 .variables("X")
                 .build()
                 .setVariable("X", raw);
-        double result = e.evaluate();
+        double result = 0;
+        try {
+            result = e.evaluate();
+        } catch (ArithmeticException aEx) {
+            LOG.error("ArithmeticException. Check conversion function or sensor output/availability: " + aEx);
+        } catch (Exception ex) {
+            LOG.error("Exception caught: " + ex);
+        }
         return result;
     }
 

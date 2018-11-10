@@ -1,0 +1,5 @@
+Huske konverteringsfunksjoner på analoge sensorer:
+
+'TMP36 temperature sensor', '((X * 4.8828) - 500) / 10'
+
+'SEN-09088 photoconductive cell', '268.27 / ( ( (10240/X)-10 ) ^ 1.429 )'

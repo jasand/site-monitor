@@ -17,8 +17,18 @@ export const FETCH_SENSORTYPES = 'fetch_sensortypes';
 
 const ROOT_URL = 'http://localhost:8080/api';
 
+function apiUrl() {
+    const protocol = window.location.protocol;
+    const host = window.location.hostname;
+    const port = window.location.port == 8088 ? '8080' : window.location.port;
+    const portIdent = port && port != '' ? ':' + port : '';
+    const api_url = protocol + '//' + host + portIdent + '/api';
+    console.log("API_URL: " + api_url);
+    return api_url;
+}
+
 export function login(loginData, callback) {
-    const request = axios.post(`${ROOT_URL}/login`, loginData); //.then((res) => callback(res));
+    const request = axios.post(`${apiUrl()}/login`, loginData); //.then((res) => callback(res));
     console.log("Logging in...");
     return {
         type: LOGIN,
@@ -27,7 +37,7 @@ export function login(loginData, callback) {
 };
 
 export function logout(token, callback) {
-    const request = axios.delete(`${ROOT_URL}/logout/${token}`);//.then(() => callback());
+    const request = axios.delete(`${apiUrl()}/logout/${token}`);//.then(() => callback());
     console.log("Logging out...");
     return {
         type: LOGOUT,
@@ -37,7 +47,7 @@ export function logout(token, callback) {
 
 export function fetchSites(token) {
     console.log("Token: " + token);
-    const request = axios.get(`${ROOT_URL}/sites`, { headers: { 'X-Auth-Token': token  } });
+    const request = axios.get(`${apiUrl()}/sites`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching sites");
     return {
         type: FETCH_SITES,
@@ -46,7 +56,7 @@ export function fetchSites(token) {
 };
 
 export function fetchSite(siteId, token) {
-    const request = axios.get(`${ROOT_URL}/sites/${siteId}`, { headers: { 'X-Auth-Token': token  } });
+    const request = axios.get(`${apiUrl()}/sites/${siteId}`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching site " + siteId);
     return {
         type: FETCH_SITE,
@@ -55,7 +65,7 @@ export function fetchSite(siteId, token) {
 };
 
 export function updateSite(site, token, callback) {
-    const request = axios.put(`${ROOT_URL}/sites/${site.id}`, site,
+    const request = axios.put(`${apiUrl()}/sites/${site.id}`, site,
         { headers: { 'X-Auth-Token': token  } }).then(() => callback());
     console.log("Updating site " + site.id);
     return {
@@ -65,7 +75,7 @@ export function updateSite(site, token, callback) {
 };
 
 export function createSite(site, token, callback) {
-    const request = axios.post(`${ROOT_URL}/sites`, site,
+    const request = axios.post(`${apiUrl()}/sites`, site,
         { headers: { 'X-Auth-Token': token  } }).then(() => callback());
     console.log("Creating site...");
     return {
@@ -75,7 +85,7 @@ export function createSite(site, token, callback) {
 }
 
 export function deleteSite(siteId, token, callback) {
-    const request = axios.delete(`${ROOT_URL}/sites/${siteId}`,
+    const request = axios.delete(`${apiUrl()}/sites/${siteId}`,
         { headers: { 'X-Auth-Token': token  } }).then(() => callback());
     console.log("Deleting site...");
     return {
@@ -85,7 +95,7 @@ export function deleteSite(siteId, token, callback) {
 }
 
 export function fetchSensorgroups(token) {
-    const request = axios.get(`${ROOT_URL}/sensorgroups`, { headers: { 'X-Auth-Token': token  } });
+    const request = axios.get(`${apiUrl()}/sensorgroups`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching sensorgroups");
     return {
         type: FETCH_SENSORGROUPS,
@@ -94,7 +104,7 @@ export function fetchSensorgroups(token) {
 };
 
 export function fetchSensorgroup(id, token) {
-    const request = axios.get(`${ROOT_URL}/sensorgroups/${id}`, { headers: { 'X-Auth-Token': token  } });
+    const request = axios.get(`${apiUrl()}/sensorgroups/${id}`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching sensorgroup " + id);
     return {
         type: FETCH_SENSORGROUP,
@@ -103,7 +113,7 @@ export function fetchSensorgroup(id, token) {
 };
 
 export function updateSensorgroup(sensorGroup, token, callback) {
-    const request = axios.put(`${ROOT_URL}/sensorgroups/${sensorGroup.id}`, sensorGroup,
+    const request = axios.put(`${apiUrl()}/sensorgroups/${sensorGroup.id}`, sensorGroup,
         { headers: { 'X-Auth-Token': token  } }).then(() => callback());
     console.log("Updating sensorgroup " + sensorGroup.id);
     return {
@@ -113,7 +123,7 @@ export function updateSensorgroup(sensorGroup, token, callback) {
 };
 
 export function fetchSensor(id, token) {
-    const request = axios.get(`${ROOT_URL}/sensors/${id}`, { headers: { 'X-Auth-Token': token  } });
+    const request = axios.get(`${apiUrl()}/sensors/${id}`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching sensor " + id);
     return {
         type: FETCH_SENSOR,
@@ -122,7 +132,7 @@ export function fetchSensor(id, token) {
 };
 
 export function updateSensor(sensor, token, callback) {
-    const request = axios.put(`${ROOT_URL}/sensors/${sensor.id}`, sensor,
+    const request = axios.put(`${apiUrl()}/sensors/${sensor.id}`, sensor,
         { headers: { 'X-Auth-Token': token  } }).then(() => callback());
     console.log("Updating sensor " + sensor.id);
     return {
@@ -132,7 +142,7 @@ export function updateSensor(sensor, token, callback) {
 };
 
 export function fetchUnits(token) {
-    const request = axios.get(`${ROOT_URL}/units`, { headers: { 'X-Auth-Token': token  } });
+    const request = axios.get(`${apiUrl()}/units`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching units");
     return {
         type: FETCH_UNITS,
@@ -141,7 +151,7 @@ export function fetchUnits(token) {
 };
 
 export function fetchSensortypes(token) {
-    const request = axios.get(`${ROOT_URL}/sensortypes`, { headers: { 'X-Auth-Token': token  } });
+    const request = axios.get(`${apiUrl()}/sensortypes`, { headers: { 'X-Auth-Token': token  } });
     console.log("Fetching sensortypes");
     return {
         type: FETCH_SENSORTYPES,

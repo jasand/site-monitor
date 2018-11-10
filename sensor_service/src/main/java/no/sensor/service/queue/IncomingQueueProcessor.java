@@ -79,20 +79,14 @@ public class IncomingQueueProcessor {
         if (sensorReadingQueueEntity != null) {
             SensorGroupEntity sensorGroup = sensorGroupRepo.findBySensorGroupId(sensorReadingQueueEntity.getSensorGroupId());
             if (sensorGroup == null) {
-                sensorGroup = new SensorGroupEntity(sensorReadingQueueEntity.getSensorGroupId());
-                sensorGroup.setFirstConnect(sensorReadingQueueEntity.getReceived());
-                sensorGroup = sensorGroupRepo.saveAndFlush(sensorGroup);
+                sensorGroup = createSensorGroupFromReading(sensorReadingQueueEntity);
             }
+
             SensorEntity sensor = sensorRepo.findBySensorGroupAndSensorId(sensorGroup, sensorReadingQueueEntity.getSensorId());
             if (sensor == null) {
-                sensor = new SensorEntity();
-                sensor.setSensorId(sensorReadingQueueEntity.getSensorId());
-                sensor.setSensorGroup(sensorGroup);
-                sensor.setFirstConnect(sensorReadingQueueEntity.getReceived());
-                // Copies rawData to value field as initial default.
-                sensor.setConversionFunction("X");
-                sensor = sensorRepo.saveAndFlush(sensor);
+                sensor = createSensorFromReading(sensorReadingQueueEntity, sensorGroup);
             }
+
             SensorReadingEntity newSensorReading = new SensorReadingEntity(sensor.getId(), sensorReadingQueueEntity.getSensorValue(),
                     SensorValueConverter.convertRawValue(sensorReadingQueueEntity.getSensorValue(), sensor.getConversionFunction()),
                     sensorReadingQueueEntity.getReceived());
@@ -111,6 +105,22 @@ public class IncomingQueueProcessor {
             return true;
         }
         return false;
+    }
+
+    private SensorGroupEntity createSensorGroupFromReading(SensorReadingQueueEntity sensorReadingQueueEntity) {
+        SensorGroupEntity sensorGroup = new SensorGroupEntity(sensorReadingQueueEntity.getSensorGroupId());
+        sensorGroup.setFirstConnect(sensorReadingQueueEntity.getReceived());
+        return sensorGroupRepo.saveAndFlush(sensorGroup);
+    }
+
+    private SensorEntity createSensorFromReading(SensorReadingQueueEntity sensorReadingQueueEntity, SensorGroupEntity sensorGroup) {
+        SensorEntity sensor = new SensorEntity();
+        sensor.setSensorId(sensorReadingQueueEntity.getSensorId());
+        sensor.setSensorGroup(sensorGroup);
+        sensor.setFirstConnect(sensorReadingQueueEntity.getReceived());
+        // Copies rawData to value field as initial default.
+        sensor.setConversionFunction("X");
+        return sensorRepo.saveAndFlush(sensor);
     }
 
     class SimpleThreadFactory implements ThreadFactory {

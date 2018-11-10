@@ -13,7 +13,9 @@ class AdminSensorItem extends Component {
                     <div className="col-md-8">
                         Sensor ID: {this.props.sensor.sensorId}<br/>
                         Sensor Type: {this.props.sensor.sensorType}<br/>
+                        Last value: {this.props.sensor.lastValue}<br/>
                         UnitOfMeasure: {this.props.sensor.unitOfMeasure ? this.props.sensor.unitOfMeasure.unitName : ''}<br/>
+                        Last connect: {this.props.sensor.lastConnect}<br/>
                         Description: {this.props.sensor.description}<br/>
                         FirstConnect: {this.props.sensor.firstConnect}<br/>
                         conversionFunction: {this.props.sensor.conversionFunction}<br/>
